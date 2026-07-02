@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaira Aliskerova — Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0c18;
+    --bg2: #13121f;
+    --accent: #7F77DD;
+    --mint: #4ecba0;
+    --text: #f0efe8;
+    --text2: #8c8a99;
+    --border: rgba(255,255,255,0.07);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    background: transparent;
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(13,12,24,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-lang { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--text2); cursor: pointer; border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; transition: all 0.2s; background: none; font-family: var(--font-body); }
+  .nav-lang:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; overflow: hidden;
+  }
+  /* Canvas stays fixed — никакого transform на canvas, иначе при возврате вверх
+     браузеру нужно пересчитывать compositing layer → долгое появление */
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    /* parallax только через translateY, без will-change чтобы не создавать отдельный слой */
+  }
+
+  /* ZAIRA: appears from deep (scale + opacity) */
+  .hero-name {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(5rem, 16vw, 14rem);
+    line-height: 0.9; letter-spacing: -0.02em;
+    color: var(--text);
+    display: block;
+  }
+  .hero-name span {
+    display: block;
+    opacity: 0;
+    transform: scale(0.3) translateZ(-600px);
+    animation: revealDepth 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+  @keyframes revealDepth {
+    0%   { opacity: 0; transform: scale(0.3); filter: blur(18px); }
+    60%  { opacity: 1; filter: blur(2px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  .hero-last {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(1.4rem, 4vw, 3.2rem);
+    letter-spacing: 0.18em; color: var(--text2);
+    margin-top: 0.4rem; text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.8s ease 1.3s forwards;
+  }
+  .hero-role {
+    margin-top: 1.6rem;
+    font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards;
+  }
+  .hero-role span { color: var(--text2); margin: 0 0.6rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll indicator — скрывается при скролле */
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeUp 0.8s ease 2.1s forwards;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .hero-scroll.hidden { opacity: 0 !important; }
+  .hero-scroll span { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text2); }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 1.8s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+
+  /* ── REVEAL ON SCROLL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── ABOUT ── */
+  #about { max-width: 1200px; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text h2 {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 1.8rem;
+  }
+  .about-text h2 em { color: var(--accent); font-style: normal; }
+  .about-text p { color: var(--text2); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem; }
+  .about-visual {
+    aspect-ratio: 3/4; background: var(--bg2); border-radius: 2px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-placeholder { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--text2); text-transform: uppercase; text-align: center; line-height: 2; }
+  .about-visual::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(127,119,221,0.08) 0%, transparent 70%);
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg2); max-width: 100%; padding: 5rem 0; }
+  #skills .inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1px; border: 1px solid var(--border); }
+  .skill-item {
+    padding: 1.8rem 1.5rem; border: 1px solid var(--border);
+    transition: background 0.3s; cursor: default;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+  }
+  .skill-item.visible { opacity: 1; transform: translateY(0); }
+  .skill-item:hover { background: rgba(127,119,221,0.08); }
+  .skill-icon { font-size: 1.6rem; margin-bottom: 0.8rem; display: block; }
+  .skill-name { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .skill-level { font-size: 0.7rem; color: var(--text2); letter-spacing: 0.06em; }
+  .skill-bar { margin-top: 0.6rem; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent), var(--mint));
+    border-radius: 1px;
+    width: var(--w-pct, 50%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.1s cubic-bezier(0.22,1,0.36,1) 0.2s;
+  }
+  .skill-item.visible .skill-fill { transform: scaleX(1); }
+
+  /* ── PROJECTS ── */
+  #projects { max-width: 1200px; }
+  .filter-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .filter-btn {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 20px; border: 1px solid var(--border);
+    background: none; color: var(--text2); cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(127,119,221,0.08); }
+
+  /* Horizontal drag strip */
+  .projects-strip-wrap {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    padding-bottom: 1rem;
+  }
+  .projects-strip-wrap:active { cursor: grabbing; }
+  .projects-strip {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    transition: transform 0.1s linear;
+  }
+
+  .proj-card {
+    border: 1px solid var(--border); border-radius: 2px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
+    cursor: pointer;
+    width: 320px;
+    flex-shrink: 0;
+    transform-style: preserve-3d;
+    perspective: 800px;
+  }
+  .proj-card:hover {
+    border-color: rgba(127,119,221,0.5);
+    transform: translateY(-8px) rotateY(-4deg) rotateX(2deg) scale(1.02);
+    box-shadow: 0 24px 60px rgba(127,119,221,0.18), 0 2px 12px rgba(0,0,0,0.5);
+  }
+  .proj-thumb {
+    aspect-ratio: 16/9; background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .proj-emoji { font-size: 3rem; }
+  .proj-body { padding: 1.4rem; }
+  .proj-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint); margin-bottom: 0.6rem; }
+  .proj-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .proj-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.2rem; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .proj-chip { font-size: 0.65rem; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; color: var(--text2); }
+
+  /* ── GALLERY ── */
+  #gallery { max-width: 1200px; overflow: hidden; }
+  .gallery-track-wrap {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .gallery-track-wrap:active { cursor: grabbing; }
+  .gallery-track {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+  }
+  .gallery-item {
+    flex-shrink: 0;
+    width: 280px;
+    border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
+    transform-style: preserve-3d;
+  }
+  .gallery-item:hover {
+    border-color: rgba(78,203,160,0.5);
+    transform: translateY(-6px) rotateY(3deg) scale(1.03);
+    box-shadow: 0 20px 50px rgba(78,203,160,0.15);
+  }
+  .gallery-thumb {
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; position: relative; overflow: hidden;
+    color: var(--text2);
+  }
+  .gallery-label { padding: 0.8rem 1rem; font-size: 0.72rem; color: var(--text2); letter-spacing: 0.06em; }
+
+  /* ── TIMELINE ── */
+  #timeline { max-width: 1200px; }
+  .timeline-wrap { position: relative; padding-left: 2rem; }
+  .timeline-wrap::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .tl-item {
+    position: relative; padding: 0 0 3.5rem 2.5rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(127,119,221,0.25);
+    transform: translateX(-4px);
+  }
+  .tl-dot.mint { background: var(--mint); box-shadow: 0 0 0 3px rgba(78,203,160,0.25); }
+  .tl-year {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .tl-year.mint { color: var(--mint); }
+  .tl-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    margin-bottom: 0.4rem; color: var(--text);
+  }
+  .tl-place {
+    font-size: 0.78rem; color: var(--text2); margin-bottom: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+  .tl-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.75; max-width: 560px; }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .tl-tag {
+    font-size: 0.63rem; padding: 3px 10px; border-radius: 20px;
+    border: 1px solid var(--border); color: var(--text2); letter-spacing: 0.06em;
+  }
+
+  /* ── NOW ── */
+  #now { background: var(--bg2); max-width: 100%; padding: 5rem 0; }
+  #now .inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+  .now-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; border: 1px solid var(--border); margin-top: 1rem; }
+  .now-card {
+    padding: 2rem 1.8rem; border: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .now-card:hover { background: rgba(127,119,221,0.06); }
+  .now-card-icon { font-size: 1.4rem; margin-bottom: 1rem; display: block; }
+  .now-card-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+  }
+  .now-card-title.mint { color: var(--mint); }
+  .now-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.8; }
+  .now-card em { color: var(--text); font-style: normal; font-weight: 500; }
+  .now-updated {
+    margin-top: 1.5rem; font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text2); opacity: 0.5;
+  }
+
+  @media (max-width: 900px) {
+    .now-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── CONTACT ── */
+  #contact { max-width: 1200px; text-align: center; padding-bottom: 8rem; }
+  #contact h2 {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  #contact h2 em { color: var(--accent); font-style: normal; }
+  #contact p { color: var(--text2); font-size: 0.9rem; margin-bottom: 3rem; }
+  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text2); text-decoration: none;
+    border: 1px solid var(--border); padding: 14px 28px; border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .contact-link:hover { color: var(--text); border-color: var(--accent); background: rgba(127,119,221,0.08); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto; font-size: 0.72rem; color: var(--text2);
+  }
+  footer a { color: var(--text2); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── LANG ── */
+  [data-lang="en"] { display: none; }
+  body.en [data-lang="ru"] { display: none; }
+  body.en [data-lang="en"] { display: block; }
+  body.en span[data-lang="en"] { display: inline; }
+  body.en span[data-lang="ru"] { display: none; }
+  span[data-lang="en"] { display: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Z·A</a>
+  <ul class="nav-links">
+    <li><a href="#about"><span data-lang="ru">Обо мне</span><span data-lang="en">About</span></a></li>
+    <li><a href="#skills"><span data-lang="ru">Навыки</span><span data-lang="en">Skills</span></a></li>
+    <li><a href="#projects"><span data-lang="ru">Проекты</span><span data-lang="en">Projects</span></a></li>
+    <li><a href="#timeline"><span data-lang="ru">Путь</span><span data-lang="en">Journey</span></a></li>
+    <li><a href="#gallery"><span data-lang="ru">Галерея</span><span data-lang="en">Gallery</span></a></li>
+    <li><a href="#contact"><span data-lang="ru">Контакт</span><span data-lang="en">Contact</span></a></li>
+  </ul>
+  <button class="nav-lang" id="langBtn">EN</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <h1 class="hero-name"><span>ZAIRA</span></h1>
+    <div class="hero-last">Aliskerova</div>
+    <div class="hero-role">
+      <span data-lang="ru">Дизайнер</span><span data-lang="en">Designer</span>
+      <span>·</span>
+      <span data-lang="ru">Разработчик</span><span data-lang="en">Developer</span>
+    </div>
+  </div>
+  <div class="hero-scroll" id="heroScroll">
+    <span data-lang="ru">Скролл</span><span data-lang="en">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">
+    <span data-lang="ru">01 — Обо мне</span><span data-lang="en">01 — About</span>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <h2>
+        <span data-lang="ru">Я делаю вещи, которые <em>красиво</em> работают</span>
+        <span data-lang="en">I build things that work <em>beautifully</em></span>
+      </h2>
+      <p data-lang="ru">Студентка специальности 09.02.07 — информационные системы и программирование. Совмещаю код и визуальное мышление: пишу на Python и JS, проектирую в Figma, рисую на графическом планшете и снимаю на камеру.</p>
+      <p data-lang="en">Student of Information Systems and Programming. I combine code with visual thinking: I write in Python and JS, design in Figma, draw on a graphics tablet, and shoot on camera.</p>
+      <p data-lang="ru">Мне интересно пространство на пересечении разработки и дизайна — там, где техническое решение само по себе является эстетическим.</p>
+      <p data-lang="en">I'm drawn to the space where development meets design — where a technical solution is itself an aesthetic one.</p>
+      <p data-lang="ru" style="color:var(--text2);font-size:0.82rem;">Москва · 19 лет · открыта к стажировкам</p>
+      <p data-lang="en" style="color:var(--text2);font-size:0.82rem;">Moscow · 19 y.o. · open to internships</p>
+    </div>
+    <div class="about-visual">
+      <div class="about-placeholder">
+        <span data-lang="ru">Здесь будет<br>твой портрет<br>или иллюстрация</span>
+        <span data-lang="en">Your portrait<br>or illustration<br>goes here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="inner">
+    <div class="section-label reveal">
+      <span data-lang="ru">02 — Навыки</span><span data-lang="en">02 — Skills</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item" data-w="82">
+        <span class="skill-icon">⬡</span>
+        <div class="skill-name">HTML / CSS</div>
+        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:82%"></div></div>
+      </div>
+      <div class="skill-item" data-w="55">
+        <span class="skill-icon">◈</span>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:55%"></div></div>
+      </div>
+      <div class="skill-item" data-w="75">
+        <span class="skill-icon">◎</span>
+        <div class="skill-name">Python</div>
+        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:75%"></div></div>
+      </div>
+      <div class="skill-item" data-w="50">
+        <span class="skill-icon">⬕</span>
+        <div class="skill-name">Flask / React</div>
+        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:50%"></div></div>
+      </div>
+      <div class="skill-item" data-w="70">
+        <span class="skill-icon">▣</span>
+        <div class="skill-name">PostgreSQL</div>
+        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:70%"></div></div>
+      </div>
+      <div class="skill-item" data-w="78">
+        <span class="skill-icon">◐</span>
+        <div class="skill-name">Figma</div>
+        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:78%"></div></div>
+      </div>
+      <div class="skill-item" data-w="72">
+        <span class="skill-icon">◑</span>
+        <div class="skill-name">Photoshop</div>
+        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:72%"></div></div>
+      </div>
+      <div class="skill-item" data-w="80">
+        <span class="skill-icon">✦</span>
+        <div class="skill-name">Illustration</div>
+        <div class="skill-level"><span data-lang="ru">Планшет</span><span data-lang="en">Tablet</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:80%"></div></div>
+      </div>
+      <div class="skill-item" data-w="42">
+        <span class="skill-icon">◉</span>
+        <div class="skill-name">Docker</div>
+        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:42%"></div></div>
+      </div>
+      <div class="skill-item" data-w="45">
+        <span class="skill-icon">⬡</span>
+        <div class="skill-name">Node.js</div>
+        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:45%"></div></div>
+      </div>
+      <div class="skill-item" data-w="60">
+        <span class="skill-icon">◈</span>
+        <div class="skill-name">Tailwind CSS</div>
+        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:60%"></div></div>
+      </div>
+      <div class="skill-item" data-w="40">
+        <span class="skill-icon">◎</span>
+        <div class="skill-name">Vite</div>
+        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="--w-pct:40%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">
+    <span data-lang="ru">03 — Проекты</span><span data-lang="en">03 — Projects</span>
+  </div>
+  <div class="filter-row reveal">
+    <button class="filter-btn active" data-filter="all">
+      <span data-lang="ru">Все</span><span data-lang="en">All</span>
+    </button>
+    <button class="filter-btn" data-filter="code">Code</button>
+    <button class="filter-btn" data-filter="design">Design</button>
+  </div>
+
+  <!-- drag-scroll horizontal strip -->
+  <div class="projects-strip-wrap reveal" id="projWrap">
+    <div class="projects-strip" id="projStrip">
+
+      <div class="proj-card" data-type="code">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#1a1530,#2a1f4e);">
+          <span class="proj-emoji">🎨</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Code · Tool</div>
+          <div class="proj-title">Palette from Photo</div>
+          <p class="proj-desc" data-lang="ru">Загружаешь фото — получаешь цветовую палитру и CSS-переменные. Canvas API, без зависимостей.</p>
+          <p class="proj-desc" data-lang="en">Upload a photo — get a color palette and CSS variables. Canvas API, zero dependencies.</p>
+          <div class="proj-stack"><span class="proj-chip">HTML</span><span class="proj-chip">CSS</span><span class="proj-chip">JS</span><span class="proj-chip">Canvas API</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-type="code">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1e1a,#0d2e24);">
+          <span class="proj-emoji">📷</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Code · Visual</div>
+          <div class="proj-title">Film Grain Filter</div>
+          <p class="proj-desc" data-lang="ru">Фильтры в стиле плёночной фотографии: Kodak, Fuji, ч/б. Загружаешь фото, скачиваешь результат.</p>
+          <p class="proj-desc" data-lang="en">Film photography filters: Kodak, Fuji, B&amp;W. Upload a photo, download the result.</p>
+          <div class="proj-stack"><span class="proj-chip">JS</span><span class="proj-chip">Canvas API</span><span class="proj-chip">CSS</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-type="code">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#1e0f2e,#2d1040);">
+          <span class="proj-emoji">🌌</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Code · Generative</div>
+          <div class="proj-title">Generative Wallpaper</div>
+          <p class="proj-desc" data-lang="ru">Генератор уникальных обоев: настраиваешь форму, цвет, плотность. Скачать в 4K.</p>
+          <p class="proj-desc" data-lang="en">Unique wallpaper generator: customize shape, color, density. Download in 4K.</p>
+          <div class="proj-stack"><span class="proj-chip">JS</span><span class="proj-chip">Canvas</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-type="code">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1a1e,#0d2030);">
+          <span class="proj-emoji">🐍</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Code · Backend</div>
+          <div class="proj-title">Mood Tracker</div>
+          <p class="proj-desc" data-lang="ru">Ежедневный трекер настроения: записи, теги, граф за месяц.</p>
+          <p class="proj-desc" data-lang="en">Daily mood tracker: notes, tags, monthly chart.</p>
+          <div class="proj-stack"><span class="proj-chip">Python</span><span class="proj-chip">Flask</span><span class="proj-chip">PostgreSQL</span><span class="proj-chip">Docker</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-type="design">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#1a150f,#2e200d);">
+          <span class="proj-emoji">✦</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Design · Figma</div>
+          <div class="proj-title" data-lang="ru">UI-кит — Карточки</div>
+          <div class="proj-title" data-lang="en">UI Kit — Cards</div>
+          <p class="proj-desc" data-lang="ru">Система карточек-компонентов для мобильного приложения. Figma auto-layout.</p>
+          <p class="proj-desc" data-lang="en">Card component system for a mobile app. Figma auto-layout.</p>
+          <div class="proj-stack"><span class="proj-chip">Figma</span><span class="proj-chip">UI Kit</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-type="code">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1a12,#0d2618);">
+          <span class="proj-emoji">✍️</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tag">Code · Animation</div>
+          <div class="proj-title">SVG Handwriting</div>
+          <p class="proj-desc" data-lang="ru">Генератор анимации «рисование от руки» через SVG stroke-dashoffset.</p>
+          <p class="proj-desc" data-lang="en">Handwriting animation generator via SVG stroke-dashoffset.</p>
+          <div class="proj-stack"><span class="proj-chip">SVG</span><span class="proj-chip">CSS Animation</span><span class="proj-chip">JS</span></div>
+        </div>
+      </div>
+
+    </div><!-- /projects-strip -->
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label reveal">
+    <span data-lang="ru">04 — Галерея</span><span data-lang="en">04 — Gallery</span>
+  </div>
+  <div class="gallery-track-wrap reveal" id="galleryWrap">
+    <div class="gallery-track" id="galleryTrack">
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:240px;background:linear-gradient(135deg,#1e1530,#2d1f4e);">
+          <span data-lang="ru">Иллюстрация 01</span><span data-lang="en">Illustration 01</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
+        <div class="gallery-label" data-lang="en">Tablet drawing</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:180px;background:linear-gradient(135deg,#0f1e1a,#1a3028);">
+          <span data-lang="ru">Фото 01</span><span data-lang="en">Photo 01</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Фотография</div>
+        <div class="gallery-label" data-lang="en">Photography</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:220px;background:linear-gradient(135deg,#1a0f0f,#2e1515);">
+          <span data-lang="ru">Иллюстрация 02</span><span data-lang="en">Illustration 02</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
+        <div class="gallery-label" data-lang="en">Tablet drawing</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:260px;background:linear-gradient(135deg,#0f1530,#1a2050);">
+          <span data-lang="ru">Дизайн 01</span><span data-lang="en">Design 01</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">UI-дизайн</div>
+        <div class="gallery-label" data-lang="en">UI design</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:200px;background:linear-gradient(135deg,#141a0f,#1e2a10);">
+          <span data-lang="ru">Фото 02</span><span data-lang="en">Photo 02</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Фотография</div>
+        <div class="gallery-label" data-lang="en">Photography</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:240px;background:linear-gradient(135deg,#1a1a0f,#2e2a10);">
+          <span data-lang="ru">Иллюстрация 03</span><span data-lang="en">Illustration 03</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
+        <div class="gallery-label" data-lang="en">Tablet drawing</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-thumb" style="height:190px;background:linear-gradient(135deg,#1a0f1e,#2a1030);">
+          <span data-lang="ru">Фото 03</span><span data-lang="en">Photo 03</span>
+        </div>
+        <div class="gallery-label" data-lang="ru">Фотография</div>
+        <div class="gallery-label" data-lang="en">Photography</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-label reveal">
+    <span data-lang="ru">05 — Образование и опыт</span><span data-lang="en">05 — Education & Experience</span>
+  </div>
+  <div class="timeline-wrap">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025 — <span data-lang="ru">сейчас</span><span data-lang="en">present</span></div>
+      <div class="tl-title"><span data-lang="ru">3–4 курс колледжа</span><span data-lang="en">3rd–4th year of college</span></div>
+      <div class="tl-place"><span data-lang="ru">Московский колледж · Специальность 09.02.07</span><span data-lang="en">Moscow College · Specialty 09.02.07</span></div>
+      <p class="tl-desc" data-lang="ru">Углублённое изучение веб-разработки, баз данных и тестирования. Работа с реальными проектами в команде.</p>
+      <p class="tl-desc" data-lang="en">Advanced web development, databases and testing. Working on real team projects.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Flask</span><span class="tl-tag">React</span><span class="tl-tag">PostgreSQL</span><span class="tl-tag">Docker</span><span class="tl-tag">Testing</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot mint"></div>
+      <div class="tl-year mint">2024</div>
+      <div class="tl-title"><span data-lang="ru">Первые проекты на GitHub</span><span data-lang="en">First GitHub projects</span></div>
+      <div class="tl-place"><span data-lang="ru">Самостоятельно</span><span data-lang="en">Self-directed</span></div>
+      <p class="tl-desc" data-lang="ru">Начала изучать HTML/CSS и JavaScript. Создала первые веб-проекты — инструменты для дизайнеров на Canvas API.</p>
+      <p class="tl-desc" data-lang="en">Started learning HTML/CSS and JavaScript. Built first web projects — design tools using Canvas API.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">HTML/CSS</span><span class="tl-tag">JavaScript</span><span class="tl-tag">Canvas API</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2023</div>
+      <div class="tl-title"><span data-lang="ru">Figma, Photoshop, иллюстрация</span><span data-lang="en">Figma, Photoshop, illustration</span></div>
+      <div class="tl-place"><span data-lang="ru">Самостоятельно</span><span data-lang="en">Self-directed</span></div>
+      <p class="tl-desc" data-lang="ru">Освоила Figma и Photoshop, начала рисовать на графическом планшете. Первые UI-киты и карточки компонентов.</p>
+      <p class="tl-desc" data-lang="en">Learned Figma and Photoshop, started drawing on a graphics tablet. First UI kits and component cards.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Figma</span><span class="tl-tag">Photoshop</span><span class="tl-tag">Illustration</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot mint"></div>
+      <div class="tl-year mint">2022</div>
+      <div class="tl-title"><span data-lang="ru">Поступление в колледж</span><span data-lang="en">Enrolled in college</span></div>
+      <div class="tl-place"><span data-lang="ru">Московский колледж · Информационные системы и программирование</span><span data-lang="en">Moscow College · Information Systems and Programming</span></div>
+      <p class="tl-desc" data-lang="ru">Начало пути в разработке. Python, основы алгоритмов, первые проекты.</p>
+      <p class="tl-desc" data-lang="en">Beginning of the development journey. Python, algorithm basics, first projects.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Python</span><span class="tl-tag">Алгоритмы</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NOW -->
+<div id="now">
+  <div class="inner">
+    <div class="section-label reveal">
+      <span data-lang="ru">06 — Сейчас</span><span data-lang="en">06 — Now</span>
+    </div>
+    <div class="now-grid">
+
+      <div class="now-card reveal">
+        <span class="now-card-icon">⚡</span>
+        <div class="now-card-title"><span data-lang="ru">Работаю над</span><span data-lang="en">Working on</span></div>
+        <p data-lang="ru">Портфолио-сайт — ты сейчас на нём. Параллельно пишу <em>Palette from Photo</em> и <em>Film Grain Filter</em> для GitHub.</p>
+        <p data-lang="en">This portfolio — you're on it right now. In parallel building <em>Palette from Photo</em> and <em>Film Grain Filter</em> for GitHub.</p>
+      </div>
+
+      <div class="now-card reveal">
+        <span class="now-card-icon">📖</span>
+        <div class="now-card-title mint"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
+        <p data-lang="ru">JavaScript — глубже чем в колледже. Читаю <em>You Don't Know JS</em>. Смотрю на Vite и Node.js как на следующий шаг.</p>
+        <p data-lang="en">JavaScript — deeper than in college. Reading <em>You Don't Know JS</em>. Looking at Vite and Node.js as the next step.</p>
+      </div>
+
+      <div class="now-card reveal">
+        <span class="now-card-icon">🎯</span>
+        <div class="now-card-title"><span data-lang="ru">Планирую</span><span data-lang="en">Planning</span></div>
+        <p data-lang="ru">После колледжа — поступление в вуз на родственную специальность. Ищу стажировку в дизайн-студию или IT-компанию.</p>
+        <p data-lang="en">After college — university in a related field. Looking for an internship at a design studio or IT company.</p>
+      </div>
+
+    </div>
+    <p class="now-updated reveal"><span data-lang="ru">Обновлено: июнь 2025</span><span data-lang="en">Updated: June 2025</span></p>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal" style="justify-content:center;">
+    <span data-lang="ru">07 — Контакт</span><span data-lang="en">07 — Contact</span>
+  </div>
+  <h2 class="reveal">
+    <span data-lang="ru"><em>Напиши</em> мне</span>
+    <span data-lang="en">Get in <em>touch</em></span>
+  </h2>
+  <p class="reveal" data-lang="ru">Открыта к стажировкам, коллаборациям и интересным проектам.</p>
+  <p class="reveal" data-lang="en">Open to internships, collaborations, and interesting projects.</p>
+  <div class="contact-links reveal">
+    <a href="https://github.com/" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a href="mailto:zaira@example.com" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      Email
+    </a>
+    <a href="https://t.me/" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+      Telegram
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Zaira Aliskerova</span>
+  <span data-lang="ru">Сделано вручную с ♥</span>
+  <span data-lang="en">Handcrafted with ♥</span>
+  <a href="#hero">↑ <span data-lang="ru">Наверх</span><span data-lang="en">Top</span></a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// PARTICLES CANVAS
+// ═══════════════════════════════════════════
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], mouse = { x: -9999, y: -9999 };
+const ACCENT = '#7F77DD', MINT = '#4ecba0';
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); initParticles(); });
+
+function rand(a, b) { return Math.random() * (b - a) + a; }
+
+function initParticles() {
+  const count = Math.min(Math.floor(W * H / 10000), 120);
+  particles = Array.from({ length: count }, () => ({
+    x: rand(0, W), y: rand(0, H),
+    vx: rand(-0.2, 0.2), vy: rand(-0.2, 0.2),
+    r: rand(1, 2.8),
+    color: Math.random() > 0.55 ? ACCENT : MINT,
+    opacity: rand(0.25, 0.75)
+  }));
+}
+initParticles();
+
+canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    const dx = p.x - mouse.x, dy = p.y - mouse.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 110 && dist > 0) {
+      const force = ((110 - dist) / 110) * 0.7;
+      p.vx += (dx / dist) * force;
+      p.vy += (dy / dist) * force;
+    }
+    p.vx *= 0.985; p.vy *= 0.985;
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.opacity;
+    ctx.fill();
+
+    for (let j = i + 1; j < particles.length; j++) {
+      const q = particles[j];
+      const d = Math.sqrt((p.x - q.x) ** 2 + (p.y - q.y) ** 2);
+      if (d < 100) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = ACCENT;
+        ctx.globalAlpha = (1 - d / 100) * 0.13;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ═══════════════════════════════════════════
+// NAVBAR reference (нужен до onScroll)
+// ═══════════════════════════════════════════
+const navbar = document.getElementById('navbar');
+
+// ═══════════════════════════════════════════
+// PARALLAX — только hero-content, canvas не трогаем совсем
+// Это устраняет задержку при возврате наверх:
+// canvas без transform = нет пересчёта compositing layer
+// ═══════════════════════════════════════════
+const heroContent = document.querySelector('.hero-content');
+const heroScroll  = document.getElementById('heroScroll');
+
+window.addEventListener('scroll', onScroll, { passive: true });
+
+function onScroll() {
+  const sy = window.scrollY;
+  // Плавный сдвиг только текста вверх при скролле
+  if (heroContent) heroContent.style.transform = `translateY(${sy * 0.22}px)`;
+  // Скрыть "Scroll" индикатор
+  if (heroScroll) {
+    heroScroll.style.opacity = sy > 30 ? '0' : '';
+  }
+  // Navbar
+  navbar.classList.toggle('scrolled', sy > 60);
+}
+
+// ═══════════════════════════════════════════
+// REVEAL ON SCROLL
+// НЕ используем unobserve — элементы анимируются
+// каждый раз когда входят/выходят из экрана
+// ═══════════════════════════════════════════
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ═══════════════════════════════════════════
+// SKILL BARS
+// Тоже без unobserve, с reset при выходе
+// ═══════════════════════════════════════════
+const skillObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    const el = entry.target;
+    if (entry.isIntersecting) {
+      setTimeout(() => el.classList.add('visible'), i * 60);
+    } else {
+      el.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.skill-item').forEach(el => skillObs.observe(el));
+
+// ═══════════════════════════════════════════
+// TIMELINE ITEMS observer
+// ═══════════════════════════════════════════
+const tlObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 120);
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.tl-item').forEach(el => tlObs.observe(el));
+
+// ═══════════════════════════════════════════
+// MOUSE-FOLLOW SCROLL для Projects и Gallery
+// Мышь движется вправо → полоса едет вправо
+// Мышь движется влево  → полоса едет влево
+// Плавно через lerp (linear interpolation)
+// ═══════════════════════════════════════════
+function makeMouseFollowScroll(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+
+  // Native overflow scroll + скрытый скроллбар
+  wrap.style.overflowX = 'auto';
+  wrap.style.scrollbarWidth = 'none';
+  wrap.style.msOverflowStyle = 'none';
+
+  let targetScroll = 0;   // куда хотим доехать
+  let currentScroll = 0;  // где сейчас (lerp)
+  let isHovered = false;
+  let rafId = null;
+
+  // Когда мышь входит в зону — включаем слежение
+  wrap.addEventListener('mouseenter', () => { isHovered = true; startLerp(); });
+  wrap.addEventListener('mouseleave', () => { isHovered = false; });
+
+  wrap.addEventListener('mousemove', e => {
+    if (!isHovered) return;
+    const rect = wrap.getBoundingClientRect();
+    // Нормализуем позицию мыши: 0 (левый край) → 1 (правый край)
+    const norm = (e.clientX - rect.left) / rect.width; // 0..1
+    // Центр (0.5) = покой, края = максимальный скролл
+    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+    targetScroll = norm * maxScroll;
+  });
+
+  function startLerp() {
+    if (rafId) return;
+    function step() {
+      // Плавное движение: 8% разницы за кадр
+      currentScroll += (targetScroll - currentScroll) * 0.08;
+      wrap.scrollLeft = currentScroll;
+      if (isHovered || Math.abs(targetScroll - currentScroll) > 0.5) {
+        rafId = requestAnimationFrame(step);
+      } else {
+        rafId = null;
+      }
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  // Touch — обычный свайп
+  let touchStartX = 0, touchScrollLeft = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = wrap.scrollLeft;
+    currentScroll = wrap.scrollLeft;
+  }, { passive: true });
+  wrap.addEventListener('touchmove', e => {
+    const dx = touchStartX - e.touches[0].pageX;
+    wrap.scrollLeft = touchScrollLeft + dx;
+    currentScroll = wrap.scrollLeft;
+    targetScroll = wrap.scrollLeft;
+  }, { passive: true });
+}
+
+makeMouseFollowScroll('projWrap');
+makeMouseFollowScroll('galleryWrap');
+
+// ═══════════════════════════════════════════
+// PROJECT FILTER
+// ═══════════════════════════════════════════
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
+    });
+  });
+});
+
+// ═══════════════════════════════════════════
+// LANGUAGE SWITCH
+// ═══════════════════════════════════════════
+document.getElementById('langBtn').addEventListener('click', () => {
+  document.body.classList.toggle('en');
+  document.getElementById('langBtn').textContent = document.body.classList.contains('en') ? 'RU' : 'EN';
+});
+</script>
+</body>
+</html>
