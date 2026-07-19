@@ -1,814 +1,820 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zaira Aliskerova — Designer & Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaira Aliskerova — Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       ROOT VARIABLES
+       ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #0d0c18;
-    --bg2: #13121f;
-    --accent: #7F77DD;
-    --mint: #4ecba0;
-    --text: #f0efe8;
-    --text2: #8c8a99;
-    --border: rgba(255,255,255,0.07);
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'Inter', sans-serif;
-  }
+    :root {
+      --bg: #0a0a1a;
+      --bg2: #111128;
+      --bg3: #1a1a3a;
+      --accent: #00ffc8;
+      --accent-rgb: 0, 255, 200;
+      --accent2: #ff6b35;
+      --accent2-rgb: 255, 107, 53;
+      --text: #f0efe8;
+      --text2: #c0bfd4;
+      --text3: #7a7a9a;
+      --border: rgba(255,255,255,0.06);
+      --shadow: rgba(0,255,200,0.15);
+      --card-bg: rgba(255,255,255,0.02);
+      --nav-bg: rgba(10,10,26,0.92);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 8px;
+      --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-  html { scroll-behavior: smooth; }
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --bg2: #e8e8ed;
+      --bg3: #d1d1db;
+      --text: #1a1a2e;
+      --text2: #4a4a6a;
+      --text3: #7a7a9a;
+      --border: rgba(0,0,0,0.08);
+      --shadow: rgba(0,255,200,0.25);
+      --card-bg: rgba(255,255,255,0.5);
+      --nav-bg: rgba(245,245,247,0.92);
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-weight: 300;
-    overflow-x: hidden;
-  }
+    [data-accent="green"] { --accent: #00ffc8; --accent-rgb: 0, 255, 200; --accent2: #ff6b35; --accent2-rgb: 255, 107, 53; --shadow: rgba(0,255,200,0.15); }
+    [data-accent="blue"] { --accent: #4facfe; --accent-rgb: 79, 172, 254; --accent2: #00f2fe; --accent2-rgb: 0, 242, 254; --shadow: rgba(79,172,254,0.15); }
+    [data-accent="pink"] { --accent: #f093fb; --accent-rgb: 240, 147, 251; --accent2: #f5576c; --accent2-rgb: 245, 87, 108; --shadow: rgba(240,147,251,0.15); }
+    [data-accent="purple"] { --accent: #a18cd1; --accent-rgb: 161, 140, 209; --accent2: #fbc2eb; --accent2-rgb: 251, 194, 235; --shadow: rgba(161,140,209,0.15); }
+    [data-accent="orange"] { --accent: #ff9a56; --accent-rgb: 255, 154, 86; --accent2: #ff6b35; --accent2-rgb: 255, 107, 53; --shadow: rgba(255,154,86,0.15); }
+    [data-accent="red"] { --accent: #ff6b6b; --accent-rgb: 255, 107, 107; --accent2: #ee5a24; --accent2-rgb: 238, 90, 36; --shadow: rgba(255,107,107,0.15); }
 
-  /* ── NAVBAR ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.4rem 3rem;
-    background: transparent;
-    transition: background 0.4s;
-  }
-  nav.scrolled { background: rgba(13,12,24,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
-  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-  .nav-links a { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-lang { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--text2); cursor: pointer; border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; transition: all 0.2s; background: none; font-family: var(--font-body); }
-  .nav-lang:hover { border-color: var(--accent); color: var(--accent); }
+    [data-theme="light"][data-accent="green"] { --shadow: rgba(0,255,200,0.25); }
+    [data-theme="light"][data-accent="blue"] { --shadow: rgba(79,172,254,0.25); }
+    [data-theme="light"][data-accent="pink"] { --shadow: rgba(240,147,251,0.25); }
+    [data-theme="light"][data-accent="purple"] { --shadow: rgba(161,140,209,0.25); }
+    [data-theme="light"][data-accent="orange"] { --shadow: rgba(255,154,86,0.25); }
+    [data-theme="light"][data-accent="red"] { --shadow: rgba(255,107,107,0.25); }
 
-  /* ── HERO ── */
-  #hero {
-    position: relative; height: 100vh; display: flex; flex-direction: column;
-    justify-content: center; align-items: center; overflow: hidden;
-  }
-  /* Canvas stays fixed — никакого transform на canvas, иначе при возврате вверх
-     браузеру нужно пересчитывать compositing layer → долгое появление */
-  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    [data-theme="light"] .stack-node { background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.1); }
+    [data-theme="light"] .work-card, [data-theme="light"] .research-card { background: #ffffff; }
+    [data-theme="light"] .stack-center { background: radial-gradient(circle, rgba(var(--accent-rgb), 0.2), transparent 70%); }
+    [data-theme="light"] .work-metrics { background: rgba(0,0,0,0.02); }
+    [data-theme="light"] .nav-lang { border-color: rgba(0,0,0,0.15); color: var(--text2); }
+    [data-theme="light"] .nav-lang:hover { border-color: var(--accent); color: var(--accent); }
+    [data-theme="light"] nav.scrolled { background: var(--nav-bg); border-bottom: 1px solid var(--border); }
+    [data-theme="light"] .hero-name { background: linear-gradient(135deg, var(--text) 0%, var(--text2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-  .hero-content {
-    position: relative; z-index: 2; text-align: center;
-    /* parallax только через translateY, без will-change чтобы не создавать отдельный слой */
-  }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
 
-  /* ZAIRA: appears from deep (scale + opacity) */
-  .hero-name {
-    font-family: var(--font-display); font-weight: 800;
-    font-size: clamp(5rem, 16vw, 14rem);
-    line-height: 0.9; letter-spacing: -0.02em;
-    color: var(--text);
-    display: block;
-  }
-  .hero-name span {
-    display: block;
-    opacity: 0;
-    transform: scale(0.3) translateZ(-600px);
-    animation: revealDepth 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-  }
-  @keyframes revealDepth {
-    0%   { opacity: 0; transform: scale(0.3); filter: blur(18px); }
-    60%  { opacity: 1; filter: blur(2px); }
-    100% { opacity: 1; transform: scale(1); filter: blur(0); }
-  }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
-  .hero-last {
-    font-family: var(--font-display); font-weight: 400;
-    font-size: clamp(1.4rem, 4vw, 3.2rem);
-    letter-spacing: 0.18em; color: var(--text2);
-    margin-top: 0.4rem; text-transform: uppercase;
-    opacity: 0; animation: fadeUp 0.8s ease 1.3s forwards;
-  }
-  .hero-role {
-    margin-top: 1.6rem;
-    font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent); opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards;
-  }
-  .hero-role span { color: var(--text2); margin: 0 0.6rem; }
+    /* ═══════════════════════════════════════════
+       NAVBAR
+       ═══════════════════════════════════════════ */
+/* Оставляем навигацию как была — растянутой */
+nav {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 100;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  padding: 1.2rem 3rem;
+  background: transparent;
+  transition: background var(--transition), border-color var(--transition);
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* А ссылки смещаем в центр */
+.nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+    nav.scrolled { background: var(--nav-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; transition: color var(--transition); }
+    .nav-logo span { color: var(--accent); transition: color var(--transition); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); text-decoration: none; transition: color var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--transition); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-lang { font-size: 0.7rem; letter-spacing: 0.06em; color: var(--text2); cursor: pointer; border: 1px solid var(--border); padding: 4px 14px; border-radius: 20px; transition: all var(--transition); background: none; font-family: var(--font-body); }
+    .nav-lang:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Scroll indicator — скрывается при скролле */
-  .hero-scroll {
-    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
-    opacity: 0; animation: fadeUp 0.8s ease 2.1s forwards;
-    transition: opacity 0.4s;
-    pointer-events: none;
-  }
-  .hero-scroll.hidden { opacity: 0 !important; }
-  .hero-scroll span { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text2); }
-  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 1.8s ease-in-out infinite; }
-  @keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+    .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; color: var(--text2); cursor: pointer; font-size: 1.1rem; transition: all var(--transition); font-family: var(--font-body); line-height: 1; }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); transform: rotate(15deg); }
 
-  /* ── SECTIONS ── */
-  section { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem;
-  }
-  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+    .nav-controls { display: flex; align-items: center; gap: 0.8rem; }
 
-  /* ── REVEAL ON SCROLL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+    .sound-toggle { background: none; border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; color: var(--text2); cursor: pointer; font-size: 1rem; transition: all var(--transition); font-family: var(--font-body); line-height: 1; }
+    .sound-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .sound-toggle.muted { opacity: 0.4; }
 
-  /* ── ABOUT ── */
-  #about { max-width: 1200px; }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-  .about-text h2 {
-    font-family: var(--font-display); font-weight: 800;
-    font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 1.8rem;
-  }
-  .about-text h2 em { color: var(--accent); font-style: normal; }
-  .about-text p { color: var(--text2); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem; }
-  .about-visual {
-    aspect-ratio: 3/4; background: var(--bg2); border-radius: 2px;
-    border: 1px solid var(--border); position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .about-placeholder { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--text2); text-transform: uppercase; text-align: center; line-height: 2; }
-  .about-visual::before {
-    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(ellipse at center, rgba(127,119,221,0.08) 0%, transparent 70%);
-  }
+    .color-picker { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.8rem 0.3rem 0.5rem; border: 1px solid var(--border); border-radius: 30px; background: rgba(var(--accent-rgb), 0.05); transition: all var(--transition); }
+    .color-picker:hover { border-color: var(--accent); }
+    .color-picker-label { font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); margin-right: 0.2rem; }
+    .color-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: all var(--transition); position: relative; }
+    .color-dot:hover { transform: scale(1.15); border-color: var(--text); }
+    .color-dot.active { border-color: var(--text); box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3); transform: scale(1.1); }
+    .color-dot.green { background: #00ffc8; }
+    .color-dot.blue { background: #4facfe; }
+    .color-dot.pink { background: #f093fb; }
+    .color-dot.purple { background: #a18cd1; }
+    .color-dot.orange { background: #ff9a56; }
+    .color-dot.red { background: #ff6b6b; }
 
-  /* ── SKILLS ── */
-  #skills { background: var(--bg2); max-width: 100%; padding: 5rem 0; }
-  #skills .inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1px; border: 1px solid var(--border); }
-  .skill-item {
-    padding: 1.8rem 1.5rem; border: 1px solid var(--border);
-    transition: background 0.3s; cursor: default;
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
-  }
-  .skill-item.visible { opacity: 1; transform: translateY(0); }
-  .skill-item:hover { background: rgba(127,119,221,0.08); }
-  .skill-icon { font-size: 1.6rem; margin-bottom: 0.8rem; display: block; }
-  .skill-name { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .skill-level { font-size: 0.7rem; color: var(--text2); letter-spacing: 0.06em; }
-  .skill-bar { margin-top: 0.6rem; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
-  .skill-fill {
-    height: 100%;
-    background: linear-gradient(to right, var(--accent), var(--mint));
-    border-radius: 1px;
-    width: var(--w-pct, 50%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1.1s cubic-bezier(0.22,1,0.36,1) 0.2s;
-  }
-  .skill-item.visible .skill-fill { transform: scaleX(1); }
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1rem; }
+      .nav-links { display: none; }
+      .nav-controls { gap: 0.4rem; }
+      .theme-toggle, .sound-toggle { padding: 4px 8px; font-size: 1rem; }
+      .color-picker { padding: 0.2rem 0.5rem 0.2rem 0.3rem; gap: 0.3rem; }
+      .color-picker-label { display: none; }
+      .color-dot { width: 16px; height: 16px; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 0.6rem 0.8rem; }
+      .nav-controls { gap: 0.3rem; }
+      .color-dot { width: 14px; height: 14px; }
+      .theme-toggle, .sound-toggle, .nav-lang { font-size: 0.8rem; padding: 2px 6px; }
+    }
 
-  /* ── PROJECTS ── */
-  #projects { max-width: 1200px; }
-  .filter-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 3rem; }
-  .filter-btn {
-    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 6px 18px; border-radius: 20px; border: 1px solid var(--border);
-    background: none; color: var(--text2); cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
-  }
-  .filter-btn.active, .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(127,119,221,0.08); }
+    /* ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ */
+    #hero { position: relative; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .hero-content { position: relative; z-index: 2; text-align: center; }
+    .hero-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(4rem, 12vw, 10rem); line-height: 0.9; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--text) 0%, var(--text2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; transform: scale(0.8); animation: heroIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s forwards; transition: background var(--transition); }
+    @keyframes heroIn { 0% { opacity: 0; transform: scale(0.8); filter: blur(12px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
+    .hero-role { margin-top: 1.2rem; font-size: 1rem; letter-spacing: 0.08em; color: var(--text); opacity: 0; animation: fadeUp 0.8s ease 1.2s forwards; font-weight: 400; text-shadow: 0 0 40px rgba(var(--accent-rgb), 0.1); }
+    .hero-role .cursor { display: inline-block; width: 2px; height: 1.2em; background: var(--accent); margin-left: 2px; animation: blink 0.8s step-end infinite; transition: background var(--transition); }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .hero-role #typed-text { color: var(--accent); font-weight: 500; transition: color var(--transition); }
+    .hero-sub { margin-top: 1.8rem; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text2); opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; font-weight: 400; text-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    .hero-sub .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin: 0 12px; animation: pulse 1.5s ease-in-out infinite; transition: background var(--transition); }
+    @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-scroll { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp 0.8s ease 2s forwards; transition: opacity var(--transition); }
+    .hero-scroll.hidden { opacity: 0 !important; }
+    .hero-scroll span { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); }
+    .scroll-line { width: 1px; height: 32px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 2s ease-in-out infinite; transition: background var(--transition); }
+    @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
 
-  /* Horizontal drag strip */
-  .projects-strip-wrap {
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    padding-bottom: 1rem;
-  }
-  .projects-strip-wrap:active { cursor: grabbing; }
-  .projects-strip {
-    display: flex;
-    gap: 1.5rem;
-    width: max-content;
-    transition: transform 0.1s linear;
-  }
+    /* ═══════════════════════════════════════════
+       SECTION COMMON
+       ═══════════════════════════════════════════ */
+    section, .section-wrap { padding: 6rem 3rem; max-width: 1280px; margin: 0 auto; }
+    .section-wrap { padding: 6rem 0; max-width: 100%; }
+    .section-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; transition: color var(--transition); }
+    .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.3; transition: background var(--transition); }
+    .section-label .num { color: var(--text3); margin-right: 0.5rem; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .proj-card {
-    border: 1px solid var(--border); border-radius: 2px;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
-    cursor: pointer;
-    width: 320px;
-    flex-shrink: 0;
-    transform-style: preserve-3d;
-    perspective: 800px;
-  }
-  .proj-card:hover {
-    border-color: rgba(127,119,221,0.5);
-    transform: translateY(-8px) rotateY(-4deg) rotateX(2deg) scale(1.02);
-    box-shadow: 0 24px 60px rgba(127,119,221,0.18), 0 2px 12px rgba(0,0,0,0.5);
-  }
-  .proj-thumb {
-    aspect-ratio: 16/9; background: var(--bg2);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .proj-emoji { font-size: 3rem; }
-  .proj-body { padding: 1.4rem; }
-  .proj-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint); margin-bottom: 0.6rem; }
-  .proj-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
-  .proj-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.2rem; }
-  .proj-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .proj-chip { font-size: 0.65rem; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; color: var(--text2); }
+    /* ═══════════════════════════════════════════
+       ABOUT
+       ═══════════════════════════════════════════ */
+    #about { background: var(--bg2); max-width: 100%; padding: 6rem 0; transition: background var(--transition); }
+    #about .inner { max-width: 1280px; margin: 0 auto; padding: 0 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-photo { display: flex; justify-content: center; align-items: center; }
+    .about-photo-placeholder { width: 100%; max-width: 420px; aspect-ratio: 3/4; border-radius: 20px; border: 1px solid var(--border); overflow: hidden; transition: all var(--transition); background-size: cover; background-position: 35% center; background-image: url('https://lh3.googleusercontent.com/d/1TlaXbs2osBXh3DmTsw5pFXtLnt9nR6_T'); }
+    .about-photo-placeholder:hover { border-color: var(--accent); transform: scale(1.02); box-shadow: 0 20px 60px var(--shadow); }
+    .about-content { display: flex; flex-direction: column; gap: 1.5rem; }
+    .about-tagline { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.2; color: var(--text); }
+    .about-tagline .highlight { color: var(--accent); transition: color var(--transition); }
+    .about-text { font-size: 0.95rem; line-height: 1.8; color: var(--text2); max-width: 540px; }
+    .about-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 0.5rem; }
+    .about-meta-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--text3); }
+    .about-meta-item .icon { font-size: 1.1rem; }
+    .about-status { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.5rem 1.2rem; border-radius: 30px; border: 1px solid rgba(var(--accent-rgb), 0.2); background: rgba(var(--accent-rgb), 0.06); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); width: fit-content; margin-top: 0.5rem; transition: all var(--transition); }
+    .about-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; transition: background var(--transition); }
+    @media (max-width: 968px) {
+      #about .inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .about-text { max-width: 100%; }
+      .about-meta { justify-content: center; }
+      .about-status { margin: 0 auto; }
+      .about-photo-placeholder { max-width: 320px; margin: 0 auto; }
+    }
 
-  /* ── GALLERY ── */
-  #gallery { max-width: 1200px; overflow: hidden; }
-  .gallery-track-wrap {
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .gallery-track-wrap:active { cursor: grabbing; }
-  .gallery-track {
-    display: flex;
-    gap: 1rem;
-    width: max-content;
-  }
-  .gallery-item {
-    flex-shrink: 0;
-    width: 280px;
-    border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
-    transform-style: preserve-3d;
-  }
-  .gallery-item:hover {
-    border-color: rgba(78,203,160,0.5);
-    transform: translateY(-6px) rotateY(3deg) scale(1.03);
-    box-shadow: 0 20px 50px rgba(78,203,160,0.15);
-  }
-  .gallery-thumb {
-    background: var(--bg2);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.1em;
-    text-transform: uppercase; position: relative; overflow: hidden;
-    color: var(--text2);
-  }
-  .gallery-label { padding: 0.8rem 1rem; font-size: 0.72rem; color: var(--text2); letter-spacing: 0.06em; }
+    /* ═══════════════════════════════════════════
+       STACK MAP
+       ═══════════════════════════════════════════ */
+    #stack { background: var(--bg2); max-width: 100%; padding: 6rem 0; transition: background var(--transition); }
+    #stack .inner { max-width: 1280px; margin: 0 auto; padding: 0 3rem; }
+    .stack-map { position: relative; width: 100%; aspect-ratio: 16/9; max-height: 500px; margin: 2rem 0 1rem; display: flex; align-items: center; justify-content: center; }
+    .stack-center { position: relative; z-index: 2; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15), transparent 70%); border: 1px solid rgba(var(--accent-rgb), 0.3); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.08); text-align: center; line-height: 1.2; transition: all var(--transition); }
+    .stack-center::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px dashed rgba(var(--accent-rgb), 0.2); animation: spin 20s linear infinite; transition: border-color var(--transition); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .stack-node { position: absolute; padding: 14px 24px; border-radius: 30px; border: 1px solid var(--border); background: rgba(10,10,26,0.85); backdrop-filter: blur(8px); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; color: var(--text2); transition: all var(--transition); cursor: default; box-shadow: 0 4px 20px rgba(0,0,0,0.3); white-space: nowrap; }
+    .stack-node:hover { border-color: var(--accent); color: var(--text); transform: scale(1.15); box-shadow: 0 4px 30px rgba(var(--accent-rgb), 0.15); }
+    .stack-node .level { display: block; font-size: 0.6rem; color: var(--text3); margin-top: 4px; }
+    .stack-node .level .bar { display: inline-block; width: 40px; height: 3px; background: var(--border); border-radius: 2px; margin-left: 6px; vertical-align: middle; overflow: hidden; transition: background var(--transition); }
+    .stack-node .level .bar .fill { display: block; height: 100%; background: var(--accent); border-radius: 2px; width: var(--pct, 50%); transition: background var(--transition); }
+    .node-1 { top: 2%; left: 2%; }
+    .node-2 { top: 1%; right: 3%; }
+    .node-3 { bottom: 12%; left: 1%; }
+    .node-4 { bottom: 2%; right: 2%; }
+    .node-5 { top: 16%; left: 20%; }
+    .node-6 { top: 14%; right: 19%; }
+    .node-7 { bottom: 20%; left: 18%; }
+    .node-8 { bottom: 16%; right: 17%; }
+    .node-9 { top: 34%; left: 5%; }
+    .node-10 { top: 30%; right: 4%; }
+    @media (max-width: 768px) {
+      .stack-map { aspect-ratio: 1/1; max-height: 400px; }
+      .stack-node { font-size: 0.6rem; padding: 8px 12px; white-space: normal; }
+      .stack-center { width: 80px; height: 80px; font-size: 0.6rem; }
+      .node-1 { top: 2%; left: 2%; }
+      .node-2 { top: 1%; right: 2%; }
+      .node-3 { bottom: 10%; left: 1%; }
+      .node-4 { bottom: 2%; right: 1%; }
+      .node-5 { top: 15%; left: 17%; }
+      .node-6 { top: 12%; right: 16%; }
+      .node-7 { bottom: 18%; left: 14%; }
+      .node-8 { bottom: 15%; right: 13%; }
+      .node-9 { top: 28%; left: 3%; }
+      .node-10 { top: 26%; right: 2%; }
+    }
 
-  /* ── TIMELINE ── */
-  #timeline { max-width: 1200px; }
-  .timeline-wrap { position: relative; padding-left: 2rem; }
-  .timeline-wrap::before {
-    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
-    width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
-  }
-  .tl-item {
-    position: relative; padding: 0 0 3.5rem 2.5rem;
-    opacity: 0; transform: translateX(-20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .tl-item.visible { opacity: 1; transform: translateX(0); }
-  .tl-dot {
-    position: absolute; left: -2rem; top: 6px;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: var(--accent); border: 2px solid var(--bg);
-    box-shadow: 0 0 0 3px rgba(127,119,221,0.25);
-    transform: translateX(-4px);
-  }
-  .tl-dot.mint { background: var(--mint); box-shadow: 0 0 0 3px rgba(78,203,160,0.25); }
-  .tl-year {
-    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 0.5rem;
-  }
-  .tl-year.mint { color: var(--mint); }
-  .tl-title {
-    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
-    margin-bottom: 0.4rem; color: var(--text);
-  }
-  .tl-place {
-    font-size: 0.78rem; color: var(--text2); margin-bottom: 0.6rem;
-    letter-spacing: 0.04em;
-  }
-  .tl-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.75; max-width: 560px; }
-  .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
-  .tl-tag {
-    font-size: 0.63rem; padding: 3px 10px; border-radius: 20px;
-    border: 1px solid var(--border); color: var(--text2); letter-spacing: 0.06em;
-  }
+    /* ═══════════════════════════════════════════
+       WORK (PROJECTS)
+       ═══════════════════════════════════════════ */
+    #work { max-width: 1280px; }
+    .work-strip-wrap { overflow: hidden; cursor: grab; user-select: none; -webkit-user-select: none; padding-bottom: 0.5rem; }
+    .work-strip-wrap:active { cursor: grabbing; }
+    .work-strip { display: flex; gap: 1.5rem; width: max-content; transition: transform 0.05s linear; }
+    .work-card { flex-shrink: 0; width: 340px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg2); transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.3s, box-shadow 0.5s, background var(--transition); transform-style: preserve-3d; perspective: 800px; will-change: transform; pointer-events: auto; opacity: 0; transform: translateY(40px) scale(0.95); }
+    .work-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .work-card:hover { border-color: var(--accent); transform: translateY(-8px) rotateY(-3deg) scale(1.02); box-shadow: 0 24px 60px var(--shadow); }
+    .work-card:nth-child(1) { transition-delay: 0.05s; }
+    .work-card:nth-child(2) { transition-delay: 0.15s; }
+    .work-card:nth-child(3) { transition-delay: 0.25s; }
+    .work-card:nth-child(4) { transition-delay: 0.35s; }
+    .work-card:nth-child(5) { transition-delay: 0.45s; }
+    .work-thumb { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .work-thumb .emoji { font-size: 3rem; }
+    .work-badge { position: absolute; top: 10px; left: 10px; font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 12px; border-radius: 12px; background: rgba(var(--accent-rgb), 0.15); color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.2); transition: all var(--transition); }
+    .work-badge.prod { background: rgba(var(--accent2-rgb), 0.15); color: var(--accent2); border-color: rgba(var(--accent2-rgb), 0.2); }
+    .work-body { padding: 1.4rem 1.6rem; }
+    .work-tag { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.5rem; }
+    .work-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--text); }
+    .work-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; margin-bottom: 1rem; }
+    .work-metrics { display: flex; gap: 1.2rem; margin-bottom: 1rem; padding: 0.6rem 0.8rem; background: var(--card-bg); border-radius: 4px; border: 1px solid var(--border); transition: all var(--transition); }
+    .work-metric { font-size: 0.65rem; color: var(--text3); }
+    .work-metric strong { color: var(--text); font-weight: 600; display: block; font-size: 0.9rem; transition: color var(--transition); }
+    .work-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .work-chip { font-size: 0.6rem; padding: 2px 10px; border: 1px solid var(--border); border-radius: 12px; color: var(--text2); transition: all var(--transition); }
+    .work-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .work-actions { display: flex; gap: 0.8rem; }
+    .work-btn { font-size: 0.7rem; padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); color: var(--text2); background: transparent; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); font-family: var(--font-body); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; pointer-events: auto; position: relative; overflow: hidden; }
+    .work-btn::before { content: ''; position: absolute; inset: 0; background: var(--accent); opacity: 0; transform: scale(0.5); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 20px; }
+    .work-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.05) translateY(-2px); }
+    .work-btn:hover::before { opacity: 0.05; transform: scale(1); }
+    .work-btn:active { transform: scale(0.92); }
+    .work-btn.primary { border-color: var(--accent); color: var(--accent); }
+    .work-btn.primary:hover { background: var(--accent); color: var(--bg); box-shadow: 0 8px 30px var(--shadow); }
+    .work-btn.primary:hover::before { opacity: 0; }
+    .work-card a, .work-card a:hover { text-decoration: none; color: inherit; }
 
-  /* ── NOW ── */
-  #now { background: var(--bg2); max-width: 100%; padding: 5rem 0; }
-  #now .inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
-  .now-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; border: 1px solid var(--border); margin-top: 1rem; }
-  .now-card {
-    padding: 2rem 1.8rem; border: 1px solid var(--border);
-    transition: background 0.3s;
-  }
-  .now-card:hover { background: rgba(127,119,221,0.06); }
-  .now-card-icon { font-size: 1.4rem; margin-bottom: 1rem; display: block; }
-  .now-card-title {
-    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 0.8rem;
-  }
-  .now-card-title.mint { color: var(--mint); }
-  .now-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.8; }
-  .now-card em { color: var(--text); font-style: normal; font-weight: 500; }
-  .now-updated {
-    margin-top: 1.5rem; font-size: 0.68rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--text2); opacity: 0.5;
-  }
+    /* ═══════════════════════════════════════════
+       RESEARCH
+       ═══════════════════════════════════════════ */
+    #research { background: var(--bg2); max-width: 100%; padding: 6rem 0; transition: background var(--transition); }
+    #research .inner { max-width: 1280px; margin: 0 auto; padding: 0 3rem; }
+    .research-strip-wrap { overflow: hidden; cursor: grab; user-select: none; -webkit-user-select: none; padding-bottom: 0.5rem; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .research-strip-wrap::-webkit-scrollbar { display: none; }
+    .research-strip-wrap:active { cursor: grabbing; }
+    .research-strip { display: flex; gap: 1.5rem; width: max-content; transition: transform 0.05s linear; padding: 0.5rem 0; }
+    .research-card { flex-shrink: 0; width: 320px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg); transition: all var(--transition); cursor: pointer; opacity: 0; transform: translateY(30px); }
+    .research-card.visible { opacity: 1; transform: translateY(0); }
+    .research-card:hover { border-color: var(--accent); transform: translateY(-6px) scale(1.01); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .research-card:nth-child(1) { transition-delay: 0.05s; }
+    .research-card:nth-child(2) { transition-delay: 0.15s; }
+    .research-card:nth-child(3) { transition-delay: 0.25s; }
+    .research-card:nth-child(4) { transition-delay: 0.35s; }
+    .research-card:nth-child(5) { transition-delay: 0.45s; }
+    .research-thumb { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; background: var(--bg2); transition: background var(--transition); }
+    .research-body { padding: 1.2rem 1.4rem; }
+    .research-title { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .research-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.6; }
+    .research-tags { display: flex; gap: 0.4rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .research-tag { font-size: 0.55rem; padding: 2px 10px; border: 1px solid var(--border); border-radius: 12px; color: var(--text3); transition: all var(--transition); }
+    .research-tag:hover { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 768px) { .research-card { width: 280px; } }
 
-  @media (max-width: 900px) {
-    .now-grid { grid-template-columns: 1fr; }
-  }
+    /* ═══════════════════════════════════════════
+       GROWTH
+       ═══════════════════════════════════════════ */
+    #growth { max-width: 1280px; }
+    .growth-track { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 2.5rem; }
+    .growth-track::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); transition: background var(--transition); }
+    .growth-item { position: relative; padding: 0 0 3rem 2.5rem; opacity: 0; transform: translateX(-20px); transition: all 0.6s ease; }
+    .growth-item.visible { opacity: 1; transform: translateX(0); }
+    .growth-dot { position: absolute; left: -2.2rem; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2); transition: all var(--transition); }
+    .growth-dot.orange { background: var(--accent2); box-shadow: 0 0 0 3px rgba(var(--accent2-rgb), 0.2); }
+    .growth-year { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; transition: color var(--transition); }
+    .growth-year.orange { color: var(--accent2); }
+    .growth-title { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .growth-place { font-size: 0.75rem; color: var(--text3); margin-bottom: 0.6rem; }
+    .growth-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.7; max-width: 560px; }
+    .growth-bar-wrap { margin-top: 0.8rem; width: 100%; max-width: 400px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; transition: background var(--transition); }
+    .growth-bar { height: 100%; border-radius: 2px; background: linear-gradient(to right, var(--accent), var(--accent2)); width: var(--pct, 0%); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(0.22,1,0.36,1) 0.2s; }
+    .growth-item.visible .growth-bar { transform: scaleX(1); }
+    .growth-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+    .growth-tag { font-size: 0.6rem; padding: 2px 10px; border-radius: 12px; border: 1px solid var(--border); color: var(--text3); transition: all var(--transition); }
+    .growth-tag:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── CONTACT ── */
-  #contact { max-width: 1200px; text-align: center; padding-bottom: 8rem; }
-  #contact h2 {
-    font-family: var(--font-display); font-weight: 800;
-    font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1;
-    margin-bottom: 1.5rem;
-  }
-  #contact h2 em { color: var(--accent); font-style: normal; }
-  #contact p { color: var(--text2); font-size: 0.9rem; margin-bottom: 3rem; }
-  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
-  .contact-link {
-    display: flex; align-items: center; gap: 0.7rem;
-    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text2); text-decoration: none;
-    border: 1px solid var(--border); padding: 14px 28px; border-radius: 2px;
-    transition: all 0.3s;
-  }
-  .contact-link:hover { color: var(--text); border-color: var(--accent); background: rgba(127,119,221,0.08); }
+    /* ═══════════════════════════════════════════
+       CONTACT
+       ═══════════════════════════════════════════ */
+    #contact { max-width: 1280px; text-align: center; padding-bottom: 8rem; }
+    #contact .status-badge { display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; border-radius: 30px; border: 1px solid rgba(var(--accent-rgb), 0.2); background: rgba(var(--accent-rgb), 0.06); margin-bottom: 2.5rem; font-size: 0.8rem; letter-spacing: 0.06em; color: var(--text2); transition: all var(--transition); }
+    #contact .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; transition: background var(--transition); }
+    #contact h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; margin-bottom: 1rem; }
+    #contact h2 em { color: var(--accent); font-style: normal; transition: color var(--transition); }
+    #contact .sub { color: var(--text2); font-size: 0.9rem; margin-bottom: 3rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+    .contact-link { display: flex; align-items: center; gap: 0.6rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); padding: 12px 24px; border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); text-decoration: none; position: relative; overflow: hidden; }
+    .contact-link::before { content: ''; position: absolute; inset: 0; background: var(--accent); opacity: 0; transform: scale(0.5); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: var(--radius); }
+    .contact-link:hover { color: var(--text); border-color: var(--accent); transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 30px var(--shadow); }
+    .contact-link:hover::before { opacity: 0.05; transform: scale(1); }
+    .contact-link:active { transform: scale(0.95); }
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border); padding: 2rem 3rem;
-    display: flex; justify-content: space-between; align-items: center;
-    max-width: 1200px; margin: 0 auto; font-size: 0.72rem; color: var(--text2);
-  }
-  footer a { color: var(--text2); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
+    /* ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ */
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; max-width: 1280px; margin: 0 auto; font-size: 0.7rem; color: var(--text3); transition: all var(--transition); }
+    footer a { color: var(--text3); text-decoration: none; transition: color var(--transition); }
+    footer a:hover { color: var(--accent); }
+    footer .heart { color: var(--accent2); }
 
-  /* ── LANG ── */
-  [data-lang="en"] { display: none; }
-  body.en [data-lang="ru"] { display: none; }
-  body.en [data-lang="en"] { display: block; }
-  body.en span[data-lang="en"] { display: inline; }
-  body.en span[data-lang="ru"] { display: none; }
-  span[data-lang="en"] { display: none; }
-
-  @media (max-width: 768px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links { display: none; }
-    section { padding: 5rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
-  }
-</style>
+    @media (max-width: 768px) {
+      section, #stack .inner, #research .inner, #about .inner { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .work-card { width: 280px; }
+      .research-card { width: 260px; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ══════════════════════════════════════════
+     NAVBAR
+     ══════════════════════════════════════════ -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">Z·A</a>
+  <a href="#hero" class="nav-logo">Z<span>·</span>A</a>
   <ul class="nav-links">
-    <li><a href="#about"><span data-lang="ru">Обо мне</span><span data-lang="en">About</span></a></li>
-    <li><a href="#skills"><span data-lang="ru">Навыки</span><span data-lang="en">Skills</span></a></li>
-    <li><a href="#projects"><span data-lang="ru">Проекты</span><span data-lang="en">Projects</span></a></li>
-    <li><a href="#timeline"><span data-lang="ru">Путь</span><span data-lang="en">Journey</span></a></li>
-    <li><a href="#gallery"><span data-lang="ru">Галерея</span><span data-lang="en">Gallery</span></a></li>
-    <li><a href="#contact"><span data-lang="ru">Контакт</span><span data-lang="en">Contact</span></a></li>
+    <li><a href="#about" data-i18n="nav.about">Обо мне</a></li>
+    <li><a href="#stack" data-i18n="nav.stack">Стек</a></li>
+    <li><a href="#work" data-i18n="nav.work">Проекты</a></li>
+    <li><a href="#research" data-i18n="nav.research">Исследования</a></li>
+    <li><a href="#growth" data-i18n="nav.growth">Рост</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Контакт</a></li>
   </ul>
-  <button class="nav-lang" id="langBtn">EN</button>
+  <div class="nav-controls">
+    <div class="color-picker" id="colorPicker">
+      <span class="color-picker-label"></span>
+      <span class="color-dot green active" data-color="green" title="Зеленый"></span>
+      <span class="color-dot blue" data-color="blue" title="Синий"></span>
+      <span class="color-dot pink" data-color="pink" title="Розовый"></span>
+      <span class="color-dot purple" data-color="purple" title="Фиолетовый"></span>
+      <span class="color-dot orange" data-color="orange" title="Оранжевый"></span>
+      <span class="color-dot red" data-color="red" title="Красный"></span>
+    </div>
+    <button class="sound-toggle" id="soundToggle" aria-label="Включить/выключить звук">🔊</button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌙</button>
+    <button class="nav-lang" id="langBtn">EN</button>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ══════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════ -->
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="hero-content">
-    <h1 class="hero-name"><span>ZAIRA</span></h1>
-    <div class="hero-last">Aliskerova</div>
+    <h1 class="hero-name" data-i18n="hero.name">Zaira Aliskerova</h1>
     <div class="hero-role">
-      <span data-lang="ru">Дизайнер</span><span data-lang="en">Designer</span>
-      <span>·</span>
-      <span data-lang="ru">Разработчик</span><span data-lang="en">Developer</span>
+      <span id="typed-text"></span><span class="cursor">|</span>
+    </div>
+    <div class="hero-sub">
+      <span class="dot"></span>
+      <span data-i18n="hero.sub">Студент · Разработчик · Дизайнер</span>
     </div>
   </div>
   <div class="hero-scroll" id="heroScroll">
-    <span data-lang="ru">Скролл</span><span data-lang="en">Scroll</span>
+    <span data-i18n="hero.scroll">Скролл</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label reveal">
-    <span data-lang="ru">01 — Обо мне</span><span data-lang="en">01 — About</span>
-  </div>
-  <div class="about-grid reveal">
-    <div class="about-text">
-      <h2>
-        <span data-lang="ru">Я делаю вещи, которые <em>красиво</em> работают</span>
-        <span data-lang="en">I build things that work <em>beautifully</em></span>
-      </h2>
-      <p data-lang="ru">Студентка специальности 09.02.07 — информационные системы и программирование. Совмещаю код и визуальное мышление: пишу на Python и JS, проектирую в Figma, рисую на графическом планшете и снимаю на камеру.</p>
-      <p data-lang="en">Student of Information Systems and Programming. I combine code with visual thinking: I write in Python and JS, design in Figma, draw on a graphics tablet, and shoot on camera.</p>
-      <p data-lang="ru">Мне интересно пространство на пересечении разработки и дизайна — там, где техническое решение само по себе является эстетическим.</p>
-      <p data-lang="en">I'm drawn to the space where development meets design — where a technical solution is itself an aesthetic one.</p>
-      <p data-lang="ru" style="color:var(--text2);font-size:0.82rem;">Москва · 19 лет · открыта к стажировкам</p>
-      <p data-lang="en" style="color:var(--text2);font-size:0.82rem;">Moscow · 19 y.o. · open to internships</p>
-    </div>
-    <div class="about-visual">
-      <div class="about-placeholder">
-        <span data-lang="ru">Здесь будет<br>твой портрет<br>или иллюстрация</span>
-        <span data-lang="en">Your portrait<br>or illustration<br>goes here</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<div id="skills">
+<!-- ══════════════════════════════════════════
+     ABOUT
+     ══════════════════════════════════════════ -->
+<div id="about">
   <div class="inner">
-    <div class="section-label reveal">
-      <span data-lang="ru">02 — Навыки</span><span data-lang="en">02 — Skills</span>
+    <div class="about-photo reveal">
+      <div class="about-photo-placeholder"></div>
     </div>
-    <div class="skills-grid">
-      <div class="skill-item" data-w="82">
-        <span class="skill-icon">⬡</span>
-        <div class="skill-name">HTML / CSS</div>
-        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:82%"></div></div>
+    <div class="about-content reveal">
+      <div class="about-tagline">
+        <span data-i18n="about.tagline1">Я делаю вещи, которые</span> <span class="highlight" data-i18n="about.tagline2">красиво работают</span>
       </div>
-      <div class="skill-item" data-w="55">
-        <span class="skill-icon">◈</span>
-        <div class="skill-name">JavaScript</div>
-        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:55%"></div></div>
+      <p class="about-text" data-i18n="about.text1">
+        Студентка специальности <strong>09.02.07</strong> — информационные системы и программирование.
+        Совмещаю код и визуальное мышление: пишу на Python и JS, проектирую в Figma,
+        рисую на графическом планшете и снимаю на камеру.
+      </p>
+      <p class="about-text" style="font-size:0.9rem; color:var(--text3);" data-i18n="about.text2">
+        Мне интересно пространство на пересечении разработки и дизайна — там, где
+        техническое решение само по себе является эстетическим.
+      </p>
+      <div class="about-meta">
+        <span class="about-meta-item"><span class="icon">📍</span> <span data-i18n="about.meta.city">Москва</span></span>
+        <span class="about-meta-item"><span class="icon">🎂</span> <span data-i18n="about.meta.age">19 лет</span></span>
+        <span class="about-meta-item"><span class="icon">🎓</span> <span data-i18n="about.meta.spec">09.02.07 ИСП</span></span>
       </div>
-      <div class="skill-item" data-w="75">
-        <span class="skill-icon">◎</span>
-        <div class="skill-name">Python</div>
-        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:75%"></div></div>
-      </div>
-      <div class="skill-item" data-w="50">
-        <span class="skill-icon">⬕</span>
-        <div class="skill-name">Flask / React</div>
-        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:50%"></div></div>
-      </div>
-      <div class="skill-item" data-w="70">
-        <span class="skill-icon">▣</span>
-        <div class="skill-name">PostgreSQL</div>
-        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:70%"></div></div>
-      </div>
-      <div class="skill-item" data-w="78">
-        <span class="skill-icon">◐</span>
-        <div class="skill-name">Figma</div>
-        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:78%"></div></div>
-      </div>
-      <div class="skill-item" data-w="72">
-        <span class="skill-icon">◑</span>
-        <div class="skill-name">Photoshop</div>
-        <div class="skill-level"><span data-lang="ru">Уверенно</span><span data-lang="en">Confident</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:72%"></div></div>
-      </div>
-      <div class="skill-item" data-w="80">
-        <span class="skill-icon">✦</span>
-        <div class="skill-name">Illustration</div>
-        <div class="skill-level"><span data-lang="ru">Планшет</span><span data-lang="en">Tablet</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:80%"></div></div>
-      </div>
-      <div class="skill-item" data-w="42">
-        <span class="skill-icon">◉</span>
-        <div class="skill-name">Docker</div>
-        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:42%"></div></div>
-      </div>
-      <div class="skill-item" data-w="45">
-        <span class="skill-icon">⬡</span>
-        <div class="skill-name">Node.js</div>
-        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:45%"></div></div>
-      </div>
-      <div class="skill-item" data-w="60">
-        <span class="skill-icon">◈</span>
-        <div class="skill-name">Tailwind CSS</div>
-        <div class="skill-level"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:60%"></div></div>
-      </div>
-      <div class="skill-item" data-w="40">
-        <span class="skill-icon">◎</span>
-        <div class="skill-name">Vite</div>
-        <div class="skill-level"><span data-lang="ru">Базовый</span><span data-lang="en">Basic</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w-pct:40%"></div></div>
+      <div class="about-status">
+        <span class="dot"></span>
+        <span data-i18n="about.status">открыта к стажировкам</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label reveal">
-    <span data-lang="ru">03 — Проекты</span><span data-lang="en">03 — Projects</span>
-  </div>
-  <div class="filter-row reveal">
-    <button class="filter-btn active" data-filter="all">
-      <span data-lang="ru">Все</span><span data-lang="en">All</span>
-    </button>
-    <button class="filter-btn" data-filter="code">Code</button>
-    <button class="filter-btn" data-filter="design">Design</button>
-  </div>
-
-  <!-- drag-scroll horizontal strip -->
-  <div class="projects-strip-wrap reveal" id="projWrap">
-    <div class="projects-strip" id="projStrip">
-
-      <div class="proj-card" data-type="code">
-        <div class="proj-thumb" style="background:linear-gradient(135deg,#1a1530,#2a1f4e);">
-          <span class="proj-emoji">🎨</span>
-        </div>
-        <div class="proj-body">
-          <div class="proj-tag">Code · Tool</div>
-          <div class="proj-title">Palette from Photo</div>
-          <p class="proj-desc" data-lang="ru">Загружаешь фото — получаешь цветовую палитру и CSS-переменные. Canvas API, без зависимостей.</p>
-          <p class="proj-desc" data-lang="en">Upload a photo — get a color palette and CSS variables. Canvas API, zero dependencies.</p>
-          <div class="proj-stack"><span class="proj-chip">HTML</span><span class="proj-chip">CSS</span><span class="proj-chip">JS</span><span class="proj-chip">Canvas API</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" data-type="code">
-        <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1e1a,#0d2e24);">
-          <span class="proj-emoji">📷</span>
-        </div>
-        <div class="proj-body">
-          <div class="proj-tag">Code · Visual</div>
-          <div class="proj-title">Film Grain Filter</div>
-          <p class="proj-desc" data-lang="ru">Фильтры в стиле плёночной фотографии: Kodak, Fuji, ч/б. Загружаешь фото, скачиваешь результат.</p>
-          <p class="proj-desc" data-lang="en">Film photography filters: Kodak, Fuji, B&amp;W. Upload a photo, download the result.</p>
-          <div class="proj-stack"><span class="proj-chip">JS</span><span class="proj-chip">Canvas API</span><span class="proj-chip">CSS</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" data-type="code">
-        <div class="proj-thumb" style="background:linear-gradient(135deg,#1e0f2e,#2d1040);">
-          <span class="proj-emoji">🌌</span>
-        </div>
-        <div class="proj-body">
-          <div class="proj-tag">Code · Generative</div>
-          <div class="proj-title">Generative Wallpaper</div>
-          <p class="proj-desc" data-lang="ru">Генератор уникальных обоев: настраиваешь форму, цвет, плотность. Скачать в 4K.</p>
-          <p class="proj-desc" data-lang="en">Unique wallpaper generator: customize shape, color, density. Download in 4K.</p>
-          <div class="proj-stack"><span class="proj-chip">JS</span><span class="proj-chip">Canvas</span></div>
-        </div>
-      </div>
-
-<a href="http://158.160.163.235:5000/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
-  <div class="proj-card" data-type="code">
-    <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1a1e,#0d2030);">
-      <span class="proj-emoji">🐍</span>
-    </div>
-    <div class="proj-body">
-      <div class="proj-tag">Code · Backend</div>
-      <div class="proj-title">Mood Tracker</div>
-      <p class="proj-desc" data-lang="ru">Ежедневный трекер настроения: записи, теги, граф за месяц.</p>
-      <p class="proj-desc" data-lang="en">Daily mood tracker: notes, tags, monthly chart.</p>
-      <div class="proj-stack">
-        <span class="proj-chip">Python</span>
-        <span class="proj-chip">Flask</span>
-        <span class="proj-chip">PostgreSQL</span>
-        <span class="proj-chip">Docker</span>
-      </div>
-      <!-- Индикатор, что это ссылка -->
-      <div style="margin-top:0.8rem; font-size:0.7rem; color:var(--accent); letter-spacing:0.06em; display:flex; align-items:center; gap:6px;">
-        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#4ecba0;"></span>
-        <span data-lang="ru">Деплой: активен</span>
-        <span data-lang="en">Deployed: live</span>
-        <span style="margin-left:auto; opacity:0.6;">↗</span>
-      </div>
-    </div>
-  </div>
-</a>
-
-      <div class="proj-card" data-type="design">
-        <div class="proj-thumb" style="background:linear-gradient(135deg,#1a150f,#2e200d);">
-          <span class="proj-emoji">✦</span>
-        </div>
-        <div class="proj-body">
-          <div class="proj-tag">Design · Figma</div>
-          <div class="proj-title" data-lang="ru">UI-кит — Карточки</div>
-          <div class="proj-title" data-lang="en">UI Kit — Cards</div>
-          <p class="proj-desc" data-lang="ru">Система карточек-компонентов для мобильного приложения. Figma auto-layout.</p>
-          <p class="proj-desc" data-lang="en">Card component system for a mobile app. Figma auto-layout.</p>
-          <div class="proj-stack"><span class="proj-chip">Figma</span><span class="proj-chip">UI Kit</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" data-type="code">
-        <div class="proj-thumb" style="background:linear-gradient(135deg,#0f1a12,#0d2618);">
-          <span class="proj-emoji">✍️</span>
-        </div>
-        <div class="proj-body">
-          <div class="proj-tag">Code · Animation</div>
-          <div class="proj-title">SVG Handwriting</div>
-          <p class="proj-desc" data-lang="ru">Генератор анимации «рисование от руки» через SVG stroke-dashoffset.</p>
-          <p class="proj-desc" data-lang="en">Handwriting animation generator via SVG stroke-dashoffset.</p>
-          <div class="proj-stack"><span class="proj-chip">SVG</span><span class="proj-chip">CSS Animation</span><span class="proj-chip">JS</span></div>
-        </div>
-      </div>
-
-    </div><!-- /projects-strip -->
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="section-label reveal">
-    <span data-lang="ru">04 — Галерея</span><span data-lang="en">04 — Gallery</span>
-  </div>
-  <div class="gallery-track-wrap reveal" id="galleryWrap">
-    <div class="gallery-track" id="galleryTrack">
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:240px;background:linear-gradient(135deg,#1e1530,#2d1f4e);">
-          <span data-lang="ru">Иллюстрация 01</span><span data-lang="en">Illustration 01</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
-        <div class="gallery-label" data-lang="en">Tablet drawing</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:180px;background:linear-gradient(135deg,#0f1e1a,#1a3028);">
-          <span data-lang="ru">Фото 01</span><span data-lang="en">Photo 01</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Фотография</div>
-        <div class="gallery-label" data-lang="en">Photography</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:220px;background:linear-gradient(135deg,#1a0f0f,#2e1515);">
-          <span data-lang="ru">Иллюстрация 02</span><span data-lang="en">Illustration 02</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
-        <div class="gallery-label" data-lang="en">Tablet drawing</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:260px;background:linear-gradient(135deg,#0f1530,#1a2050);">
-          <span data-lang="ru">Дизайн 01</span><span data-lang="en">Design 01</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">UI-дизайн</div>
-        <div class="gallery-label" data-lang="en">UI design</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:200px;background:linear-gradient(135deg,#141a0f,#1e2a10);">
-          <span data-lang="ru">Фото 02</span><span data-lang="en">Photo 02</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Фотография</div>
-        <div class="gallery-label" data-lang="en">Photography</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:240px;background:linear-gradient(135deg,#1a1a0f,#2e2a10);">
-          <span data-lang="ru">Иллюстрация 03</span><span data-lang="en">Illustration 03</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Рисунок с планшета</div>
-        <div class="gallery-label" data-lang="en">Tablet drawing</div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-thumb" style="height:190px;background:linear-gradient(135deg,#1a0f1e,#2a1030);">
-          <span data-lang="ru">Фото 03</span><span data-lang="en">Photo 03</span>
-        </div>
-        <div class="gallery-label" data-lang="ru">Фотография</div>
-        <div class="gallery-label" data-lang="en">Photography</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-label reveal">
-    <span data-lang="ru">05 — Образование и опыт</span><span data-lang="en">05 — Education & Experience</span>
-  </div>
-  <div class="timeline-wrap">
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-year">2025 — <span data-lang="ru">сейчас</span><span data-lang="en">present</span></div>
-      <div class="tl-title"><span data-lang="ru">3–4 курс колледжа</span><span data-lang="en">3rd–4th year of college</span></div>
-      <div class="tl-place"><span data-lang="ru">Московский колледж · Специальность 09.02.07</span><span data-lang="en">Moscow College · Specialty 09.02.07</span></div>
-      <p class="tl-desc" data-lang="ru">Углублённое изучение веб-разработки, баз данных и тестирования. Работа с реальными проектами в команде.</p>
-      <p class="tl-desc" data-lang="en">Advanced web development, databases and testing. Working on real team projects.</p>
-      <div class="tl-tags">
-        <span class="tl-tag">Flask</span><span class="tl-tag">React</span><span class="tl-tag">PostgreSQL</span><span class="tl-tag">Docker</span><span class="tl-tag">Testing</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot mint"></div>
-      <div class="tl-year mint">2024</div>
-      <div class="tl-title"><span data-lang="ru">Первые проекты на GitHub</span><span data-lang="en">First GitHub projects</span></div>
-      <div class="tl-place"><span data-lang="ru">Самостоятельно</span><span data-lang="en">Self-directed</span></div>
-      <p class="tl-desc" data-lang="ru">Начала изучать HTML/CSS и JavaScript. Создала первые веб-проекты — инструменты для дизайнеров на Canvas API.</p>
-      <p class="tl-desc" data-lang="en">Started learning HTML/CSS and JavaScript. Built first web projects — design tools using Canvas API.</p>
-      <div class="tl-tags">
-        <span class="tl-tag">HTML/CSS</span><span class="tl-tag">JavaScript</span><span class="tl-tag">Canvas API</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-year">2023</div>
-      <div class="tl-title"><span data-lang="ru">Figma, Photoshop, иллюстрация</span><span data-lang="en">Figma, Photoshop, illustration</span></div>
-      <div class="tl-place"><span data-lang="ru">Самостоятельно</span><span data-lang="en">Self-directed</span></div>
-      <p class="tl-desc" data-lang="ru">Освоила Figma и Photoshop, начала рисовать на графическом планшете. Первые UI-киты и карточки компонентов.</p>
-      <p class="tl-desc" data-lang="en">Learned Figma and Photoshop, started drawing on a graphics tablet. First UI kits and component cards.</p>
-      <div class="tl-tags">
-        <span class="tl-tag">Figma</span><span class="tl-tag">Photoshop</span><span class="tl-tag">Illustration</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot mint"></div>
-      <div class="tl-year mint">2022</div>
-      <div class="tl-title"><span data-lang="ru">Поступление в колледж</span><span data-lang="en">Enrolled in college</span></div>
-      <div class="tl-place"><span data-lang="ru">Московский колледж · Информационные системы и программирование</span><span data-lang="en">Moscow College · Information Systems and Programming</span></div>
-      <p class="tl-desc" data-lang="ru">Начало пути в разработке. Python, основы алгоритмов, первые проекты.</p>
-      <p class="tl-desc" data-lang="en">Beginning of the development journey. Python, algorithm basics, first projects.</p>
-      <div class="tl-tags">
-        <span class="tl-tag">Python</span><span class="tl-tag">Алгоритмы</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- NOW -->
-<div id="now">
+<!-- ══════════════════════════════════════════
+     STACK MAP
+     ══════════════════════════════════════════ -->
+<div id="stack">
   <div class="inner">
     <div class="section-label reveal">
-      <span data-lang="ru">06 — Сейчас</span><span data-lang="en">06 — Now</span>
+      <span class="num">01</span> <span data-i18n="stack.title">Технологический стек</span>
     </div>
-    <div class="now-grid">
+    <div class="stack-map reveal">
+      <div class="stack-center" data-i18n="stack.center">Full Stack</div>
 
-      <div class="now-card reveal">
-        <span class="now-card-icon">⚡</span>
-        <div class="now-card-title"><span data-lang="ru">Работаю над</span><span data-lang="en">Working on</span></div>
-        <p data-lang="ru">Портфолио-сайт — ты сейчас на нём. Параллельно пишу <em>Palette from Photo</em> и <em>Film Grain Filter</em> для GitHub.</p>
-        <p data-lang="en">This portfolio — you're on it right now. In parallel building <em>Palette from Photo</em> and <em>Film Grain Filter</em> for GitHub.</p>
+      <div class="stack-node node-1">
+        Python
+        <span class="level"><span class="bar"><span class="fill" style="--pct:80%"></span></span> 80%</span>
       </div>
-
-      <div class="now-card reveal">
-        <span class="now-card-icon">📖</span>
-        <div class="now-card-title mint"><span data-lang="ru">Изучаю</span><span data-lang="en">Learning</span></div>
-        <p data-lang="ru">JavaScript — глубже чем в колледже. Читаю <em>You Don't Know JS</em>. Смотрю на Vite и Node.js как на следующий шаг.</p>
-        <p data-lang="en">JavaScript — deeper than in college. Reading <em>You Don't Know JS</em>. Looking at Vite and Node.js as the next step.</p>
+      <div class="stack-node node-2">
+        Flask
+        <span class="level"><span class="bar"><span class="fill" style="--pct:70%"></span></span> 70%</span>
       </div>
-
-      <div class="now-card reveal">
-        <span class="now-card-icon">🎯</span>
-        <div class="now-card-title"><span data-lang="ru">Планирую</span><span data-lang="en">Planning</span></div>
-        <p data-lang="ru">После колледжа — поступление в вуз на родственную специальность. Ищу стажировку в дизайн-студию или IT-компанию.</p>
-        <p data-lang="en">After college — university in a related field. Looking for an internship at a design studio or IT company.</p>
+      <div class="stack-node node-3">
+        PostgreSQL
+        <span class="level"><span class="bar"><span class="fill" style="--pct:75%"></span></span> 75%</span>
       </div>
-
+      <div class="stack-node node-4">
+        Docker
+        <span class="level"><span class="bar"><span class="fill" style="--pct:45%"></span></span> 45%</span>
+      </div>
+      <div class="stack-node node-5">
+        React
+        <span class="level"><span class="bar"><span class="fill" style="--pct:50%"></span></span> 50%</span>
+      </div>
+      <div class="stack-node node-6">
+        JavaScript
+        <span class="level"><span class="bar"><span class="fill" style="--pct:55%"></span></span> 55%</span>
+      </div>
+      <div class="stack-node node-7">
+        Figma
+        <span class="level"><span class="bar"><span class="fill" style="--pct:78%"></span></span> 78%</span>
+      </div>
+      <div class="stack-node node-8">
+        HTML/CSS
+        <span class="level"><span class="bar"><span class="fill" style="--pct:85%"></span></span> 85%</span>
+      </div>
+      <div class="stack-node node-9">
+        Git
+        <span class="level"><span class="bar"><span class="fill" style="--pct:70%"></span></span> 70%</span>
+      </div>
+      <div class="stack-node node-10">
+        Tailwind
+        <span class="level"><span class="bar"><span class="fill" style="--pct:60%"></span></span> 60%</span>
+      </div>
     </div>
-    <p class="now-updated reveal"><span data-lang="ru">Обновлено: июнь 2025</span><span data-lang="en">Updated: June 2025</span></p>
   </div>
 </div>
 
-<!-- CONTACT -->
+<!-- ══════════════════════════════════════════
+     WORK (PROJECTS)
+     ══════════════════════════════════════════ -->
+<section id="work">
+  <div class="section-label reveal">
+    <span class="num">02</span> <span data-i18n="work.title">Full Stack проекты</span>
+  </div>
+
+  <div class="work-strip-wrap reveal" id="workWrap">
+    <div class="work-strip" id="workStrip">
+
+      <!-- ─── Mood Tracker ─── -->
+      <a href="http://158.160.163.235:5000/" target="_blank" rel="noopener" style="text-decoration:none; color:inherit; display:block; flex-shrink:0; pointer-events:auto;" class="project-link">
+        <div class="work-card">
+          <div class="work-thumb" style="background:linear-gradient(135deg,#0a1a0a,#001a1a);">
+            <span class="emoji">🌊</span>
+            <span class="work-badge prod" data-i18n="work.mood.badge">● Live</span>
+          </div>
+          <div class="work-body">
+            <div class="work-tag" data-i18n="work.mood.tag">Full Stack · Production</div>
+            <div class="work-title" data-i18n="work.mood.title">Mood Tracker</div>
+            <p class="work-desc" data-i18n="work.mood.desc">
+              Ежедневный трекер настроения с аналитикой. JWT-аутентификация,
+              дашборд с графиками, REST API.
+            </p>
+            <div class="work-metrics">
+              <div class="work-metric"><strong data-i18n="work.mood.metric1">↑ 98%</strong><span data-i18n="work.mood.metric1label">Uptime</span></div>
+              <div class="work-metric"><strong data-i18n="work.mood.metric2">⚡ 120ms</strong><span data-i18n="work.mood.metric2label">Avg. response</span></div>
+            </div>
+            <div class="work-stack">
+              <span class="work-chip">Python</span>
+              <span class="work-chip">Flask</span>
+              <span class="work-chip">PostgreSQL</span>
+              <span class="work-chip">Docker</span>
+              <span class="work-chip">JWT</span>
+            </div>
+            <div class="work-actions">
+              <span class="work-btn primary" data-i18n="work.mood.demo">🌐 Live Demo</span>
+              <span class="work-btn" data-i18n="work.mood.github">📂 GitHub</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- ─── URL Shortener ─── -->
+      <div class="work-card">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#1a0a0a,#2a0a0a);">
+          <span class="emoji">🔗</span>
+          <span class="work-badge" data-i18n="work.url.badge">API</span>
+        </div>
+        <div class="work-body">
+          <div class="work-tag" data-i18n="work.url.tag">Full Stack · API</div>
+          <div class="work-title" data-i18n="work.url.title">URL Shortener</div>
+          <p class="work-desc" data-i18n="work.url.desc">
+            Сервис сокращения ссылок с аналитикой переходов.
+            Кастомные алиасы, QR-коды, панель статистики.
+          </p>
+          <div class="work-metrics">
+            <div class="work-metric"><strong data-i18n="work.url.metric1">📊 1.2K</strong><span data-i18n="work.url.metric1label">Total clicks</span></div>
+            <div class="work-metric"><strong data-i18n="work.url.metric2">⚡ 45ms</strong><span data-i18n="work.url.metric2label">Redirect time</span></div>
+          </div>
+          <div class="work-stack">
+            <span class="work-chip">Python</span>
+            <span class="work-chip">Flask</span>
+            <span class="work-chip">PostgreSQL</span>
+            <span class="work-chip">Redis</span>
+          </div>
+          <div class="work-actions">
+            <span class="work-btn" data-i18n="work.url.demo">🌐 Demo</span>
+            <span class="work-btn" data-i18n="work.url.github">📂 GitHub</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Task Manager API ─── -->
+      <div class="work-card">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#0a0a1a,#0a1a2a);">
+          <span class="emoji">📋</span>
+          <span class="work-badge" data-i18n="work.task.badge">API</span>
+        </div>
+        <div class="work-body">
+          <div class="work-tag" data-i18n="work.task.tag">Backend · REST API</div>
+          <div class="work-title" data-i18n="work.task.title">Task Manager API</div>
+          <p class="work-desc" data-i18n="work.task.desc">
+            RESTful API для управления задачами. Роли, фильтры,
+            пагинация, Swagger-документация.
+          </p>
+          <div class="work-metrics">
+            <div class="work-metric"><strong data-i18n="work.task.metric1">🔐 JWT</strong><span data-i18n="work.task.metric1label">Auth</span></div>
+            <div class="work-metric"><strong data-i18n="work.task.metric2">📚 Swagger</strong><span data-i18n="work.task.metric2label">Docs</span></div>
+          </div>
+          <div class="work-stack">
+            <span class="work-chip">Python</span>
+            <span class="work-chip">Flask</span>
+            <span class="work-chip">SQLAlchemy</span>
+            <span class="work-chip">Swagger</span>
+          </div>
+          <div class="work-actions">
+            <span class="work-btn" data-i18n="work.task.demo">🌐 Demo</span>
+            <span class="work-btn" data-i18n="work.task.github">📂 GitHub</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Design System ─── -->
+      <div class="work-card">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#1a0a1a,#2a0a2a);">
+          <span class="emoji">🎨</span>
+          <span class="work-badge" data-i18n="work.design.badge">Design</span>
+        </div>
+        <div class="work-body">
+          <div class="work-tag" data-i18n="work.design.tag">UI/UX · Design System</div>
+          <div class="work-title" data-i18n="work.design.title">UI Kit — E-Commerce</div>
+          <p class="work-desc" data-i18n="work.design.desc">
+            Система компонентов для маркетплейса. Карточки товаров,
+            фильтры, корзина, адаптивная сетка в Figma.
+          </p>
+          <div class="work-stack">
+            <span class="work-chip">Figma</span>
+            <span class="work-chip">Auto Layout</span>
+            <span class="work-chip">Design Tokens</span>
+          </div>
+          <div class="work-actions">
+            <span class="work-btn" data-i18n="work.design.figma">🎯 Figma</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /work-strip -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     RESEARCH (горизонтальный скролл)
+     ══════════════════════════════════════════ -->
+<div id="research">
+  <div class="inner">
+    <div class="section-label reveal">
+      <span class="num">03</span> <span data-i18n="research.title">Исследования</span>
+    </div>
+
+    <div class="research-strip-wrap reveal" id="researchWrap">
+      <div class="research-strip" id="researchStrip">
+
+        <div class="research-card">
+          <div class="research-thumb" style="background:linear-gradient(135deg,#0a1a0a,#001a1a);">📊</div>
+          <div class="research-body">
+            <div class="research-title" data-i18n="research.item1.title">Рынок Рунета 2025</div>
+            <p class="research-desc" data-i18n="research.item1.desc">Инфографика по росту цифровой экономики РФ: e-commerce, облачные сервисы, ИИ.</p>
+            <div class="research-tags">
+              <span class="research-tag">Figma</span>
+              <span class="research-tag" data-i18n="research.item1.tag1">Data Viz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-card">
+          <div class="research-thumb" style="background:linear-gradient(135deg,#1a0a0a,#2a1a0a);">🧠</div>
+          <div class="research-body">
+            <div class="research-title" data-i18n="research.item2.title">Сравнение нейросетей</div>
+            <p class="research-desc" data-i18n="research.item2.desc">Анализ Kandinsky, Midjourney, GigaChat по 5 критериям: стиль, скорость, цена.</p>
+            <div class="research-tags">
+              <span class="research-tag">Figma</span>
+              <span class="research-tag" data-i18n="research.item2.tag1">Research</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-card">
+          <div class="research-thumb" style="background:linear-gradient(135deg,#0a0a1a,#0a1a2a);">📈</div>
+          <div class="research-body">
+            <div class="research-title" data-i18n="research.item3.title">Эволюция интерфейсов</div>
+            <p class="research-desc" data-i18n="research.item3.desc">Визуализация того, как менялись главные экраны Яндекса и Google за 20 лет.</p>
+            <div class="research-tags">
+              <span class="research-tag">Figma</span>
+              <span class="research-tag" data-i18n="research.item3.tag1">History</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-card">
+          <div class="research-thumb" style="background:linear-gradient(135deg,#1a1a0a,#2a2a0a);">🎯</div>
+          <div class="research-body">
+            <div class="research-title" data-i18n="research.item4.title">Карточки маркетплейсов</div>
+            <p class="research-desc" data-i18n="research.item4.desc">Редизайн карточек товаров на Ozon/WB с инфографикой и видео-превью.</p>
+            <div class="research-tags">
+              <span class="research-tag">Figma</span>
+              <span class="research-tag" data-i18n="research.item4.tag1">E-Commerce</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-card">
+          <div class="research-thumb" style="background:linear-gradient(135deg,#2a1a0a,#1a0a2a);">🎬</div>
+          <div class="research-body">
+            <div class="research-title" data-i18n="research.item5.title">Тренды UI/UX 2025</div>
+            <p class="research-desc" data-i18n="research.item5.desc">Анализ современных тенденций в интерфейсах: микро-анимации, 3D, нейро-дизайн.</p>
+            <div class="research-tags">
+              <span class="research-tag">Figma</span>
+              <span class="research-tag" data-i18n="research.item5.tag1">Trends</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     GROWTH (Timeline)
+     ══════════════════════════════════════════ -->
+<section id="growth">
+  <div class="section-label reveal">
+    <span class="num">04</span> <span data-i18n="growth.title">Трекер роста</span>
+  </div>
+  <div class="growth-track">
+
+    <div class="growth-item">
+      <div class="growth-dot orange"></div>
+      <div class="growth-year orange">2023</div>
+      <div class="growth-title" data-i18n="growth.item1.title">Поступление в колледж</div>
+      <div class="growth-place" data-i18n="growth.item1.place">Московский колледж · Информационные системы</div>
+      <p class="growth-desc" data-i18n="growth.item1.desc">Начало пути в разработке. Python, алгоритмы, первые проекты.</p>
+      <div class="growth-bar-wrap"><div class="growth-bar" style="--pct:30%"></div></div>
+      <div class="growth-tags">
+        <span class="growth-tag">Python</span>
+        <span class="growth-tag" data-i18n="growth.item1.tag1">Алгоритмы</span>
+      </div>
+    </div>
+
+    <div class="growth-item">
+      <div class="growth-dot"></div>
+      <div class="growth-year">2023</div>
+      <div class="growth-title" data-i18n="growth.item2.title">Дизайн + Frontend</div>
+      <div class="growth-place" data-i18n="growth.item2.place">Figma, Photoshop, иллюстрация</div>
+      <p class="growth-desc" data-i18n="growth.item2.desc">Освоила Figma и Photoshop. Первые UI-киты и компоненты.</p>
+      <div class="growth-bar-wrap"><div class="growth-bar" style="--pct:50%"></div></div>
+      <div class="growth-tags">
+        <span class="growth-tag">Figma</span>
+        <span class="growth-tag">Photoshop</span>
+        <span class="growth-tag" data-i18n="growth.item2.tag1">Illustration</span>
+      </div>
+    </div>
+
+    <div class="growth-item">
+      <div class="growth-dot orange"></div>
+      <div class="growth-year orange">2024</div>
+      <div class="growth-title" data-i18n="growth.item3.title">Full Stack + DevOps</div>
+      <div class="growth-place" data-i18n="growth.item3.place">Flask, PostgreSQL, Docker</div>
+      <p class="growth-desc" data-i18n="growth.item3.desc">Первые полноценные веб-приложения. Деплой на сервере.</p>
+      <div class="growth-bar-wrap"><div class="growth-bar" style="--pct:70%"></div></div>
+      <div class="growth-tags">
+        <span class="growth-tag">Flask</span>
+        <span class="growth-tag">PostgreSQL</span>
+        <span class="growth-tag">Docker</span>
+      </div>
+    </div>
+
+    <div class="growth-item">
+      <div class="growth-dot"></div>
+      <div class="growth-year">2025</div>
+      <div class="growth-title" data-i18n="growth.item4.title">3–4 курс · Системный дизайн</div>
+      <div class="growth-place" data-i18n="growth.item4.place">Углублённая веб-разработка, тестирование</div>
+      <p class="growth-desc" data-i18n="growth.item4.desc">Работа с реальными проектами в команде. Подготовка к стажировке.</p>
+      <div class="growth-bar-wrap"><div class="growth-bar" style="--pct:85%"></div></div>
+      <div class="growth-tags">
+        <span class="growth-tag">React</span>
+        <span class="growth-tag" data-i18n="growth.item4.tag1">Testing</span>
+        <span class="growth-tag" data-i18n="growth.item4.tag2">System Design</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+     ══════════════════════════════════════════ -->
 <section id="contact">
   <div class="section-label reveal" style="justify-content:center;">
-    <span data-lang="ru">07 — Контакт</span><span data-lang="en">07 — Contact</span>
+    <span class="num">05</span> <span data-i18n="contact.title">Контакт</span>
   </div>
+
+  <div class="status-badge reveal">
+    <span class="status-dot"></span>
+    <span data-i18n="contact.status">Open to work · Ищу стажировку</span>
+  </div>
+
   <h2 class="reveal">
-    <span data-lang="ru"><em>Напиши</em> мне</span>
-    <span data-lang="en">Get in <em>touch</em></span>
+    <em data-i18n="contact.headline1">Напиши</em> <span data-i18n="contact.headline2">мне</span>
   </h2>
-  <p class="reveal" data-lang="ru">Открыта к стажировкам, коллаборациям и интересным проектам.</p>
-  <p class="reveal" data-lang="en">Open to internships, collaborations, and interesting projects.</p>
+  <p class="sub reveal" data-i18n="contact.sub">Открыта к стажировкам, коллаборациям и интересным проектам.</p>
+
   <div class="contact-links reveal">
     <a href="https://github.com/" target="_blank" class="contact-link">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -825,21 +831,166 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════ -->
 <footer>
   <span>© 2025 Zaira Aliskerova</span>
-  <span data-lang="ru">Сделано вручную с ♥</span>
-  <span data-lang="en">Handcrafted with ♥</span>
-  <a href="#hero">↑ <span data-lang="ru">Наверх</span><span data-lang="en">Top</span></a>
+  <span data-i18n="footer.made">Сделано вручную с <span class="heart">♥</span></span>
+  <a href="#hero" data-i18n="footer.top">↑ Наверх</a>
 </footer>
 
+<!-- ══════════════════════════════════════════
+     MAIN SCRIPTS
+     ══════════════════════════════════════════ -->
 <script>
+// ═══════════════════════════════════════════
+// SOUND ENGINE
+// ═══════════════════════════════════════════
+class SoundEngine {
+  constructor() {
+    this.enabled = true;
+    this.audioCtx = null;
+    this.initialized = false;
+  }
+
+  init() {
+    if (this.initialized) return;
+    try {
+      this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      this.initialized = true;
+    } catch (e) {
+      console.warn('Web Audio API not supported');
+    }
+  }
+
+  play(type) {
+    if (!this.enabled || !this.initialized) return;
+    try {
+      const ctx = this.audioCtx;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      switch (type) {
+        case 'click':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.06);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
+          break;
+
+        case 'hover':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(700, now + 0.04);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+          break;
+
+        case 'theme':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.1);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.start(now);
+          osc.stop(now + 0.1);
+          break;
+
+        case 'lang':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(500, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+          break;
+
+        case 'project':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(900, now + 0.1);
+          gain.gain.setValueAtTime(0.07, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.start(now);
+          osc.stop(now + 0.1);
+          break;
+
+        case 'research':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.exponentialRampToValueAtTime(500, now + 0.06);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
+          break;
+
+        default:
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(500, now);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+      }
+    } catch (e) {
+      // Silently fail
+    }
+  }
+
+  toggle() {
+    this.enabled = !this.enabled;
+    return this.enabled;
+  }
+}
+
+const sound = new SoundEngine();
+
+// Инициализируем звук при первом взаимодействии
+function initSoundOnInteraction() {
+  if (!sound.initialized) {
+    sound.init();
+    document.removeEventListener('click', initSoundOnInteraction);
+    document.removeEventListener('keydown', initSoundOnInteraction);
+  }
+}
+document.addEventListener('click', initSoundOnInteraction);
+document.addEventListener('keydown', initSoundOnInteraction);
+
+// ═══════════════════════════════════════════
+// SOUND TOGGLE
+// ═══════════════════════════════════════════
+const soundToggle = document.getElementById('soundToggle');
+soundToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const enabled = sound.toggle();
+  soundToggle.textContent = enabled ? '🔊' : '🔇';
+  soundToggle.classList.toggle('muted', !enabled);
+  if (enabled) sound.play('click');
+});
+
 // ═══════════════════════════════════════════
 // PARTICLES CANVAS
 // ═══════════════════════════════════════════
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
 let W, H, particles = [], mouse = { x: -9999, y: -9999 };
-const ACCENT = '#7F77DD', MINT = '#4ecba0';
+const ACCENT = '#00ffc8', ACCENT2 = '#ff6b35';
 
 function resize() {
   W = canvas.width = window.innerWidth;
@@ -851,13 +1002,13 @@ window.addEventListener('resize', () => { resize(); initParticles(); });
 function rand(a, b) { return Math.random() * (b - a) + a; }
 
 function initParticles() {
-  const count = Math.min(Math.floor(W * H / 10000), 120);
+  const count = Math.min(Math.floor(W * H / 15000), 80);
   particles = Array.from({ length: count }, () => ({
     x: rand(0, W), y: rand(0, H),
-    vx: rand(-0.2, 0.2), vy: rand(-0.2, 0.2),
-    r: rand(1, 2.8),
-    color: Math.random() > 0.55 ? ACCENT : MINT,
-    opacity: rand(0.25, 0.75)
+    vx: rand(-0.1, 0.1), vy: rand(-0.1, 0.1),
+    r: rand(1.5, 3),
+    color: Math.random() > 0.5 ? ACCENT : ACCENT2,
+    opacity: rand(0.1, 0.4)
   }));
 }
 initParticles();
@@ -871,12 +1022,12 @@ function drawParticles() {
     const p = particles[i];
     const dx = p.x - mouse.x, dy = p.y - mouse.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 110 && dist > 0) {
-      const force = ((110 - dist) / 110) * 0.7;
+    if (dist < 120 && dist > 0) {
+      const force = ((120 - dist) / 120) * 0.4;
       p.vx += (dx / dist) * force;
       p.vy += (dy / dist) * force;
     }
-    p.vx *= 0.985; p.vy *= 0.985;
+    p.vx *= 0.99; p.vy *= 0.99;
     p.x += p.vx; p.y += p.vy;
     if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
     if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
@@ -890,12 +1041,12 @@ function drawParticles() {
     for (let j = i + 1; j < particles.length; j++) {
       const q = particles[j];
       const d = Math.sqrt((p.x - q.x) ** 2 + (p.y - q.y) ** 2);
-      if (d < 100) {
+      if (d < 120) {
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(q.x, q.y);
         ctx.strokeStyle = ACCENT;
-        ctx.globalAlpha = (1 - d / 100) * 0.13;
+        ctx.globalAlpha = (1 - d / 120) * 0.06;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -907,111 +1058,110 @@ function drawParticles() {
 drawParticles();
 
 // ═══════════════════════════════════════════
-// NAVBAR reference (нужен до onScroll)
+// TYPED TEXT
+// ═══════════════════════════════════════════
+const typedText = document.getElementById('typed-text');
+const roles = [
+  'Full Stack Developer',
+  'System Architect',
+  'UI/UX Designer',
+  'Python Developer'
+];
+let roleIndex = 0, charIndex = 0, isDeleting = false;
+
+function typeEffect() {
+  const current = roles[roleIndex];
+  if (!isDeleting && charIndex <= current.length) {
+    typedText.textContent = current.slice(0, charIndex++);
+    setTimeout(typeEffect, 90);
+  } else if (isDeleting && charIndex >= 0) {
+    typedText.textContent = current.slice(0, charIndex--);
+    setTimeout(typeEffect, 40);
+  } else {
+    isDeleting = !isDeleting;
+    if (!isDeleting) roleIndex = (roleIndex + 1) % roles.length;
+    setTimeout(typeEffect, 1800);
+  }
+}
+typeEffect();
+
+// ═══════════════════════════════════════════
+// NAVBAR & SCROLL
 // ═══════════════════════════════════════════
 const navbar = document.getElementById('navbar');
-
-// ═══════════════════════════════════════════
-// PARALLAX — только hero-content, canvas не трогаем совсем
-// Это устраняет задержку при возврате наверх:
-// canvas без transform = нет пересчёта compositing layer
-// ═══════════════════════════════════════════
+const heroScroll = document.getElementById('heroScroll');
 const heroContent = document.querySelector('.hero-content');
-const heroScroll  = document.getElementById('heroScroll');
 
-window.addEventListener('scroll', onScroll, { passive: true });
-
-function onScroll() {
+window.addEventListener('scroll', () => {
   const sy = window.scrollY;
-  // Плавный сдвиг только текста вверх при скролле
-  if (heroContent) heroContent.style.transform = `translateY(${sy * 0.22}px)`;
-  // Скрыть "Scroll" индикатор
-  if (heroScroll) {
-    heroScroll.style.opacity = sy > 30 ? '0' : '';
-  }
-  // Navbar
+  if (heroContent) heroContent.style.transform = `translateY(${sy * 0.2}px)`;
+  if (heroScroll) heroScroll.classList.toggle('hidden', sy > 30);
   navbar.classList.toggle('scrolled', sy > 60);
-}
+}, { passive: true });
 
 // ═══════════════════════════════════════════
 // REVEAL ON SCROLL
-// НЕ используем unobserve — элементы анимируются
-// каждый раз когда входят/выходят из экрана
 // ═══════════════════════════════════════════
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    } else {
-      entry.target.classList.remove('visible');
-    }
+    entry.target.classList.toggle('visible', entry.isIntersecting);
   });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ═══════════════════════════════════════════
-// SKILL BARS
-// Тоже без unobserve, с reset при выходе
+// WORK CARDS ANIMATION
 // ═══════════════════════════════════════════
-const skillObs = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    const el = entry.target;
+const cardObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
     if (entry.isIntersecting) {
-      setTimeout(() => el.classList.add('visible'), i * 60);
-    } else {
-      el.classList.remove('visible');
+      entry.target.classList.add('visible');
     }
   });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.skill-item').forEach(el => skillObs.observe(el));
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.work-card').forEach(el => cardObs.observe(el));
 
 // ═══════════════════════════════════════════
-// TIMELINE ITEMS observer
+// RESEARCH CARDS ANIMATION
 // ═══════════════════════════════════════════
-const tlObs = new IntersectionObserver((entries) => {
+const researchObs = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 120);
-    } else {
-      entry.target.classList.remove('visible');
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
     }
   });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.tl-item').forEach(el => tlObs.observe(el));
+}, { threshold: 0.1 });
+document.querySelectorAll('.research-card').forEach(el => researchObs.observe(el));
 
 // ═══════════════════════════════════════════
-// MOUSE-FOLLOW SCROLL для Projects и Gallery
-// Мышь движется вправо → полоса едет вправо
-// Мышь движется влево  → полоса едет влево
-// Плавно через lerp (linear interpolation)
+// GROWTH ITEMS
+// ═══════════════════════════════════════════
+const growthObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    setTimeout(() => entry.target.classList.toggle('visible', entry.isIntersecting), i * 150);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.growth-item').forEach(el => growthObs.observe(el));
+
+// ═══════════════════════════════════════════
+// MOUSE-FOLLOW SCROLL для проектов
 // ═══════════════════════════════════════════
 function makeMouseFollowScroll(wrapId) {
   const wrap = document.getElementById(wrapId);
   if (!wrap) return;
-
-  // Native overflow scroll + скрытый скроллбар
   wrap.style.overflowX = 'auto';
   wrap.style.scrollbarWidth = 'none';
   wrap.style.msOverflowStyle = 'none';
 
-  let targetScroll = 0;   // куда хотим доехать
-  let currentScroll = 0;  // где сейчас (lerp)
-  let isHovered = false;
-  let rafId = null;
+  let targetScroll = 0, currentScroll = 0, isHovered = false, rafId = null;
 
-  // Когда мышь входит в зону — включаем слежение
   wrap.addEventListener('mouseenter', () => { isHovered = true; startLerp(); });
   wrap.addEventListener('mouseleave', () => { isHovered = false; });
 
   wrap.addEventListener('mousemove', e => {
     if (!isHovered) return;
     const rect = wrap.getBoundingClientRect();
-    // Нормализуем позицию мыши: 0 (левый край) → 1 (правый край)
-    const norm = (e.clientX - rect.left) / rect.width; // 0..1
-    // Центр (0.5) = покой, края = максимальный скролл
+    const norm = (e.clientX - rect.left) / rect.width;
     const maxScroll = wrap.scrollWidth - wrap.clientWidth;
     targetScroll = norm * maxScroll;
   });
@@ -1019,7 +1169,6 @@ function makeMouseFollowScroll(wrapId) {
   function startLerp() {
     if (rafId) return;
     function step() {
-      // Плавное движение: 8% разницы за кадр
       currentScroll += (targetScroll - currentScroll) * 0.08;
       wrap.scrollLeft = currentScroll;
       if (isHovered || Math.abs(targetScroll - currentScroll) > 0.5) {
@@ -1031,7 +1180,6 @@ function makeMouseFollowScroll(wrapId) {
     rafId = requestAnimationFrame(step);
   }
 
-  // Touch — обычный свайп
   let touchStartX = 0, touchScrollLeft = 0;
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].pageX;
@@ -1045,30 +1193,441 @@ function makeMouseFollowScroll(wrapId) {
     targetScroll = wrap.scrollLeft;
   }, { passive: true });
 }
-
-makeMouseFollowScroll('projWrap');
-makeMouseFollowScroll('galleryWrap');
+makeMouseFollowScroll('workWrap');
 
 // ═══════════════════════════════════════════
-// PROJECT FILTER
+// MOUSE-FOLLOW SCROLL для исследований
 // ═══════════════════════════════════════════
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    document.querySelectorAll('.proj-card').forEach(card => {
-      card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
-    });
+function makeResearchScroll(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  wrap.style.overflowX = 'auto';
+  wrap.style.scrollbarWidth = 'none';
+  wrap.style.msOverflowStyle = 'none';
+
+  let targetScroll = 0, currentScroll = 0, isHovered = false, rafId = null;
+
+  wrap.addEventListener('mouseenter', () => { isHovered = true; startLerp(); });
+  wrap.addEventListener('mouseleave', () => { isHovered = false; });
+
+  wrap.addEventListener('mousemove', e => {
+    if (!isHovered) return;
+    const rect = wrap.getBoundingClientRect();
+    const norm = (e.clientX - rect.left) / rect.width;
+    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+    targetScroll = norm * maxScroll;
+  });
+
+  function startLerp() {
+    if (rafId) return;
+    function step() {
+      currentScroll += (targetScroll - currentScroll) * 0.08;
+      wrap.scrollLeft = currentScroll;
+      if (isHovered || Math.abs(targetScroll - currentScroll) > 0.5) {
+        rafId = requestAnimationFrame(step);
+      } else {
+        rafId = null;
+      }
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  let touchStartX = 0, touchScrollLeft = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = wrap.scrollLeft;
+    currentScroll = wrap.scrollLeft;
+  }, { passive: true });
+  wrap.addEventListener('touchmove', e => {
+    const dx = touchStartX - e.touches[0].pageX;
+    wrap.scrollLeft = touchScrollLeft + dx;
+    currentScroll = wrap.scrollLeft;
+    targetScroll = wrap.scrollLeft;
+  }, { passive: true });
+}
+makeResearchScroll('researchWrap');
+
+// ═══════════════════════════════════════════
+// THEME TOGGLE
+// ═══════════════════════════════════════════
+const themeToggle = document.getElementById('themeToggle');
+let isDark = true;
+
+themeToggle.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeToggle.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  sound.play('theme');
+  initParticles();
+});
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+  isDark = false;
+  document.documentElement.setAttribute('data-theme', 'light');
+  themeToggle.textContent = '☀️';
+}
+
+// ═══════════════════════════════════════════
+// COLOR THEME PICKER
+// ═══════════════════════════════════════════
+document.querySelectorAll('.color-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+    const color = dot.dataset.color;
+    document.documentElement.setAttribute('data-accent', color);
+    localStorage.setItem('accent', color);
+    initParticles();
+    sound.play('click');
+  });
+});
+
+const savedAccent = localStorage.getItem('accent');
+if (savedAccent) {
+  document.documentElement.setAttribute('data-accent', savedAccent);
+  document.querySelectorAll('.color-dot').forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.color === savedAccent);
+  });
+}
+
+// ═══════════════════════════════════════════
+// LANGUAGE SWITCH — ПОЛНАЯ ЛОКАЛИЗАЦИЯ
+// ═══════════════════════════════════════════
+const langBtn = document.getElementById('langBtn');
+let currentLang = 'ru';
+
+const translations = {
+  ru: {
+    // Навигация
+    'nav.about': 'Обо мне',
+    'nav.stack': 'Стек',
+    'nav.work': 'Проекты',
+    'nav.research': 'Исследования',
+    'nav.growth': 'Рост',
+    'nav.contact': 'Контакт',
+
+    // Hero
+    'hero.name': 'Заира Алискерова',
+    'hero.sub': 'Студент · Разработчик · Дизайнер',
+    'hero.scroll': 'Скролл',
+
+    // About
+    'about.tagline1': 'Я делаю вещи, которые',
+    'about.tagline2': 'красиво работают',
+    'about.text1': 'Студентка специальности 09.02.07 — информационные системы и программирование. Совмещаю код и визуальное мышление: пишу на Python и JS, проектирую в Figma, рисую на графическом планшете и снимаю на камеру.',
+    'about.text2': 'Мне интересно пространство на пересечении разработки и дизайна — там, где техническое решение само по себе является эстетическим.',
+    'about.meta.city': 'Москва',
+    'about.meta.age': '19 лет',
+    'about.meta.spec': '09.02.07 ИСП',
+    'about.status': 'открыта к стажировкам',
+
+    // Stack
+    'stack.title': 'Технологический стек',
+    'stack.center': 'Full Stack',
+
+    // Work
+    'work.title': 'Full Stack проекты',
+    'work.mood.badge': '● Live',
+    'work.mood.tag': 'Full Stack · Production',
+    'work.mood.title': 'Mood Tracker',
+    'work.mood.desc': 'Ежедневный трекер настроения с аналитикой. JWT-аутентификация, дашборд с графиками, REST API.',
+    'work.mood.metric1': '↑ 98%',
+    'work.mood.metric1label': 'Uptime',
+    'work.mood.metric2': '⚡ 120ms',
+    'work.mood.metric2label': 'Avg. response',
+    'work.mood.demo': '🌐 Live Demo',
+    'work.mood.github': '📂 GitHub',
+    'work.url.badge': 'API',
+    'work.url.tag': 'Full Stack · API',
+    'work.url.title': 'URL Shortener',
+    'work.url.desc': 'Сервис сокращения ссылок с аналитикой переходов. Кастомные алиасы, QR-коды, панель статистики.',
+    'work.url.metric1': '📊 1.2K',
+    'work.url.metric1label': 'Total clicks',
+    'work.url.metric2': '⚡ 45ms',
+    'work.url.metric2label': 'Redirect time',
+    'work.url.demo': '🌐 Demo',
+    'work.url.github': '📂 GitHub',
+    'work.task.badge': 'API',
+    'work.task.tag': 'Backend · REST API',
+    'work.task.title': 'Task Manager API',
+    'work.task.desc': 'RESTful API для управления задачами. Роли, фильтры, пагинация, Swagger-документация.',
+    'work.task.metric1': '🔐 JWT',
+    'work.task.metric1label': 'Auth',
+    'work.task.metric2': '📚 Swagger',
+    'work.task.metric2label': 'Docs',
+    'work.task.demo': '🌐 Demo',
+    'work.task.github': '📂 GitHub',
+    'work.design.badge': 'Design',
+    'work.design.tag': 'UI/UX · Design System',
+    'work.design.title': 'UI Kit — E-Commerce',
+    'work.design.desc': 'Система компонентов для маркетплейса. Карточки товаров, фильтры, корзина, адаптивная сетка в Figma.',
+    'work.design.figma': '🎯 Figma',
+
+    // Research
+    'research.title': 'Исследования',
+    'research.item1.title': 'Рынок Рунета 2025',
+    'research.item1.desc': 'Инфографика по росту цифровой экономики РФ: e-commerce, облачные сервисы, ИИ.',
+    'research.item1.tag1': 'Data Viz',
+    'research.item2.title': 'Сравнение нейросетей',
+    'research.item2.desc': 'Анализ Kandinsky, Midjourney, GigaChat по 5 критериям: стиль, скорость, цена.',
+    'research.item2.tag1': 'Research',
+    'research.item3.title': 'Эволюция интерфейсов',
+    'research.item3.desc': 'Визуализация того, как менялись главные экраны Яндекса и Google за 20 лет.',
+    'research.item3.tag1': 'History',
+    'research.item4.title': 'Карточки маркетплейсов',
+    'research.item4.desc': 'Редизайн карточек товаров на Ozon/WB с инфографикой и видео-превью.',
+    'research.item4.tag1': 'E-Commerce',
+    'research.item5.title': 'Тренды UI/UX 2025',
+    'research.item5.desc': 'Анализ современных тенденций в интерфейсах: микро-анимации, 3D, нейро-дизайн.',
+    'research.item5.tag1': 'Trends',
+
+    // Growth
+    'growth.title': 'Трекер роста',
+    'growth.item1.title': 'Поступление в колледж',
+    'growth.item1.place': 'Московский колледж · Информационные системы',
+    'growth.item1.desc': 'Начало пути в разработке. Python, алгоритмы, первые проекты.',
+    'growth.item1.tag1': 'Алгоритмы',
+    'growth.item2.title': 'Дизайн + Frontend',
+    'growth.item2.place': 'Figma, Photoshop, иллюстрация',
+    'growth.item2.desc': 'Освоила Figma и Photoshop. Первые UI-киты и компоненты.',
+    'growth.item2.tag1': 'Illustration',
+    'growth.item3.title': 'Full Stack + DevOps',
+    'growth.item3.place': 'Flask, PostgreSQL, Docker',
+    'growth.item3.desc': 'Первые полноценные веб-приложения. Деплой на сервере.',
+    'growth.item4.title': '3–4 курс · Системный дизайн',
+    'growth.item4.place': 'Углублённая веб-разработка, тестирование',
+    'growth.item4.desc': 'Работа с реальными проектами в команде. Подготовка к стажировке.',
+    'growth.item4.tag1': 'Testing',
+    'growth.item4.tag2': 'System Design',
+
+    // Contact
+    'contact.title': 'Контакт',
+    'contact.status': 'Open to work · Ищу стажировку',
+    'contact.headline1': 'Напиши',
+    'contact.headline2': 'мне',
+    'contact.sub': 'Открыта к стажировкам, коллаборациям и интересным проектам.',
+
+    // Footer
+    'footer.made': 'Сделано вручную с ♥',
+    'footer.top': '↑ Наверх'
+  },
+  en: {
+    // Navigation
+    'nav.about': 'About',
+    'nav.stack': 'Stack',
+    'nav.work': 'Projects',
+    'nav.research': 'Research',
+    'nav.growth': 'Growth',
+    'nav.contact': 'Contact',
+
+    // Hero
+    'hero.name': 'Zaira Aliskerova',
+    'hero.sub': 'Student · Developer · Designer',
+    'hero.scroll': 'Scroll',
+
+    // About
+    'about.tagline1': 'I make things that',
+    'about.tagline2': 'work beautifully',
+    'about.text1': 'Student of specialty 09.02.07 — Information Systems and Programming. I combine code and visual thinking: write in Python and JS, design in Figma, draw on a graphics tablet and shoot on camera.',
+    'about.text2': 'I am interested in the space at the intersection of development and design — where the technical solution itself is aesthetic.',
+    'about.meta.city': 'Moscow',
+    'about.meta.age': '19 years old',
+    'about.meta.spec': '09.02.07 ISP',
+    'about.status': 'open to internships',
+
+    // Stack
+    'stack.title': 'Tech Stack',
+    'stack.center': 'Full Stack',
+
+    // Work
+    'work.title': 'Full Stack Projects',
+    'work.mood.badge': '● Live',
+    'work.mood.tag': 'Full Stack · Production',
+    'work.mood.title': 'Mood Tracker',
+    'work.mood.desc': 'Daily mood tracker with analytics. JWT authentication, dashboard with charts, REST API.',
+    'work.mood.metric1': '↑ 98%',
+    'work.mood.metric1label': 'Uptime',
+    'work.mood.metric2': '⚡ 120ms',
+    'work.mood.metric2label': 'Avg. response',
+    'work.mood.demo': '🌐 Live Demo',
+    'work.mood.github': '📂 GitHub',
+    'work.url.badge': 'API',
+    'work.url.tag': 'Full Stack · API',
+    'work.url.title': 'URL Shortener',
+    'work.url.desc': 'Link shortening service with click analytics. Custom aliases, QR codes, statistics dashboard.',
+    'work.url.metric1': '📊 1.2K',
+    'work.url.metric1label': 'Total clicks',
+    'work.url.metric2': '⚡ 45ms',
+    'work.url.metric2label': 'Redirect time',
+    'work.url.demo': '🌐 Demo',
+    'work.url.github': '📂 GitHub',
+    'work.task.badge': 'API',
+    'work.task.tag': 'Backend · REST API',
+    'work.task.title': 'Task Manager API',
+    'work.task.desc': 'RESTful API for task management. Roles, filters, pagination, Swagger documentation.',
+    'work.task.metric1': '🔐 JWT',
+    'work.task.metric1label': 'Auth',
+    'work.task.metric2': '📚 Swagger',
+    'work.task.metric2label': 'Docs',
+    'work.task.demo': '🌐 Demo',
+    'work.task.github': '📂 GitHub',
+    'work.design.badge': 'Design',
+    'work.design.tag': 'UI/UX · Design System',
+    'work.design.title': 'UI Kit — E-Commerce',
+    'work.design.desc': 'Component system for marketplace. Product cards, filters, cart, responsive grid in Figma.',
+    'work.design.figma': '🎯 Figma',
+
+    // Research
+    'research.title': 'Research',
+    'research.item1.title': 'Runet Market 2025',
+    'research.item1.desc': 'Infographics on the growth of the Russian digital economy: e-commerce, cloud services, AI.',
+    'research.item1.tag1': 'Data Viz',
+    'research.item2.title': 'Neural Networks Comparison',
+    'research.item2.desc': 'Analysis of Kandinsky, Midjourney, GigaChat by 5 criteria: style, speed, price.',
+    'research.item2.tag1': 'Research',
+    'research.item3.title': 'Interface Evolution',
+    'research.item3.desc': 'Visualization of how the main screens of Yandex and Google have changed over 20 years.',
+    'research.item3.tag1': 'History',
+    'research.item4.title': 'Marketplace Cards',
+    'research.item4.desc': 'Redesign of product cards on Ozon/WB with infographics and video preview.',
+    'research.item4.tag1': 'E-Commerce',
+    'research.item5.title': 'UI/UX Trends 2025',
+    'research.item5.desc': 'Analysis of modern trends in interfaces: micro-animations, 3D, neuro-design.',
+    'research.item5.tag1': 'Trends',
+
+    // Growth
+    'growth.title': 'Growth Tracker',
+    'growth.item1.title': 'College Admission',
+    'growth.item1.place': 'Moscow College · Information Systems',
+    'growth.item1.desc': 'The beginning of the journey in development. Python, algorithms, first projects.',
+    'growth.item1.tag1': 'Algorithms',
+    'growth.item2.title': 'Design + Frontend',
+    'growth.item2.place': 'Figma, Photoshop, illustration',
+    'growth.item2.desc': 'Mastered Figma and Photoshop. First UI kits and components.',
+    'growth.item2.tag1': 'Illustration',
+    'growth.item3.title': 'Full Stack + DevOps',
+    'growth.item3.place': 'Flask, PostgreSQL, Docker',
+    'growth.item3.desc': 'First full-fledged web applications. Deployment on a server.',
+    'growth.item4.title': 'Year 3–4 · System Design',
+    'growth.item4.place': 'Advanced web development, testing',
+    'growth.item4.desc': 'Working on real projects in a team. Preparing for an internship.',
+    'growth.item4.tag1': 'Testing',
+    'growth.item4.tag2': 'System Design',
+
+    // Contact
+    'contact.title': 'Contact',
+    'contact.status': 'Open to work · Looking for internship',
+    'contact.headline1': 'Write',
+    'contact.headline2': 'to me',
+    'contact.sub': 'Open to internships, collaborations and interesting projects.',
+
+    // Footer
+    'footer.made': 'Handmade with ♥',
+    'footer.top': '↑ Top'
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key] !== undefined) {
+      // Для элементов с HTML-содержимым
+      if (el.innerHTML.includes('<span') && !el.querySelector('.highlight')) {
+        const text = translations[lang][key];
+        el.innerHTML = text;
+      } else if (el.querySelector('.highlight')) {
+        // Для тегов с подсветкой сохраняем структуру
+        const highlight = el.querySelector('.highlight');
+        if (highlight) {
+          const text1 = translations[lang][key + '1'];
+          const text2 = translations[lang][key + '2'];
+          if (text1 && text2) {
+            el.childNodes[0].textContent = text1 + ' ';
+            highlight.textContent = text2;
+          }
+        }
+      } else {
+        el.textContent = translations[lang][key];
+      }
+    }
+  });
+  langBtn.textContent = lang === 'ru' ? 'EN' : 'RU';
+  sound.play('lang');
+}
+
+langBtn.addEventListener('click', () => {
+  const newLang = currentLang === 'ru' ? 'en' : 'ru';
+  setLanguage(newLang);
+});
+
+// ═══════════════════════════════════════════
+// ЗВУКИ НА ЭЛЕМЕНТЫ
+// ═══════════════════════════════════════════
+
+// Звук при клике на карточки исследований
+document.querySelectorAll('.research-card').forEach(card => {
+  card.addEventListener('click', () => {
+    sound.play('research');
+  });
+  card.addEventListener('mouseenter', () => {
+    sound.play('hover');
+  });
+});
+
+// Звук при клике на кнопки в карточках проектов
+document.querySelectorAll('.work-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    sound.play('click');
+  });
+});
+
+// Звук при наведении на карточки проектов
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    sound.play('hover');
+  });
+});
+
+// Звук при клике на ссылки проектов
+document.querySelectorAll('.project-link').forEach(link => {
+  link.addEventListener('click', () => {
+    sound.play('project');
+  });
+});
+
+// Звук при клике на контактные ссылки
+document.querySelectorAll('.contact-link').forEach(link => {
+  link.addEventListener('click', () => {
+    sound.play('click');
+  });
+  link.addEventListener('mouseenter', () => {
+    sound.play('hover');
+  });
+});
+
+// Звук при клике на ссылки в навигации
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    sound.play('click');
   });
 });
 
 // ═══════════════════════════════════════════
-// LANGUAGE SWITCH
+// KEYBOARD SHORTCUTS
 // ═══════════════════════════════════════════
-document.getElementById('langBtn').addEventListener('click', () => {
-  document.body.classList.toggle('en');
-  document.getElementById('langBtn').textContent = document.body.classList.contains('en') ? 'RU' : 'EN';
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't' || e.key === 'T') {
+    e.preventDefault();
+    themeToggle.click();
+  }
+  if (e.key === 's' || e.key === 'S') {
+    e.preventDefault();
+    soundToggle.click();
+  }
 });
 </script>
 </body>
